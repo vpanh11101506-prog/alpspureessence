@@ -620,6 +620,8 @@ export default function App() {
         onClose={() => setSelectedProduct(null)}
         onAddToCart={(p, qty) => handleAddToCart(p, qty)}
         onBuyNow={(p, qty) => handleBuyNow(p, qty)}
+        user={user}
+        onShowToast={showToast}
       />
 
       {/* Full Checkout & Payment Modal (COD, VietQR, Bank Transfer) */}

@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
-import { X, Sparkles, Droplets, RefreshCw, ArrowRight, Check, ShoppingBag } from 'lucide-react';
-import { Product } from '../types';
+import { X, Sparkles, Droplets, ArrowRight, Check, ShoppingBag, Star } from 'lucide-react';
+import { Product, UserProfile } from '../types';
+import { ProductReviewsSection } from './ProductReviewsSection';
 
 interface ProductDetailModalProps {
   product: Product | null;
   onClose: () => void;
   onAddToCart?: (product: Product, quantity: number) => void;
   onBuyNow?: (product: Product, quantity: number) => void;
+  user?: UserProfile | null;
+  onShowToast?: (msg: string) => void;
 }
 
 export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
@@ -14,9 +17,11 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
   onClose,
   onAddToCart,
   onBuyNow,
+  user,
+  onShowToast,
 }) => {
   const [quantity, setQuantity] = useState(1);
-  const [activeTab, setActiveTab] = useState<'benefits' | 'ingredients' | 'usage'>('benefits');
+  const [activeTab, setActiveTab] = useState<'benefits' | 'ingredients' | 'usage' | 'reviews'>('benefits');
   const [addedAnimation, setAddedAnimation] = useState(false);
 
   if (!product) return null;
@@ -26,6 +31,14 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
       onAddToCart(product, quantity);
       setAddedAnimation(true);
       setTimeout(() => setAddedAnimation(false), 1500);
+    }
+  };
+
+  const handleOpenReviews = () => {
+    setActiveTab('reviews');
+    const tabsElement = document.getElementById('product-detail-tabs');
+    if (tabsElement) {
+      tabsElement.scrollIntoView({ behavior: 'smooth' });
     }
   };
 
@@ -105,8 +118,38 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                   {product.name}
                 </h2>
 
+                {/* Star rating preview clickable badge */}
+                <button
+                  type="button"
+                  onClick={handleOpenReviews}
+                  className="flex items-center space-x-2 mt-2 group text-left cursor-pointer focus:outline-none"
+                  title="Nhấn để xem nhận xét và đánh giá sao từ người dùng"
+                >
+                  <div className="flex items-center text-amber-500">
+                    {[1, 2, 3, 4, 5].map((star) => (
+                      <Star
+                        key={star}
+                        className={`w-3.5 h-3.5 ${
+                          star <= Math.round(product.rating)
+                            ? 'fill-amber-400 text-amber-400'
+                            : 'text-[#d6d4cf]'
+                        }`}
+                      />
+                    ))}
+                  </div>
+                  <span className="font-semibold text-xs text-[#1c1c19] group-hover:text-[#74584d] transition-colors">
+                    {product.rating}
+                  </span>
+                  <span className="text-xs text-[#77767b] group-hover:text-[#1c1c19] transition-colors">
+                    ({product.reviewCount} đánh giá)
+                  </span>
+                  <span className="text-[10px] text-[#74584d] bg-[#fed8c9]/40 px-2 py-0.5 rounded-full font-medium hidden sm:inline-block">
+                    Xem nhận xét ↓
+                  </span>
+                </button>
+
                 {/* Subtitle */}
-                <p className="text-xs sm:text-sm text-[#77767b] font-light mt-1">
+                <p className="text-xs sm:text-sm text-[#77767b] font-light mt-1.5">
                   {product.subtitle}
                 </p>
 
@@ -211,14 +254,14 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
             </div>
           </div>
 
-          {/* Bottom Tabs: Detailed Skincare Information */}
-          <div className="mt-8 pt-6 border-t border-[#202022]/8">
-            <div className="flex border-b border-[#202022]/10 space-x-3 sm:space-x-8 text-xs tracking-wider overflow-x-auto pb-1">
+          {/* Bottom Tabs: Detailed Skincare Information & Customer Reviews */}
+          <div id="product-detail-tabs" className="mt-8 pt-6 border-t border-[#202022]/8">
+            <div className="flex border-b border-[#202022]/10 space-x-2 sm:space-x-6 text-xs tracking-wider overflow-x-auto pb-1">
               <button
                 onClick={() => setActiveTab('benefits')}
                 className={`pb-2.5 font-medium transition-colors whitespace-nowrap ${
                   activeTab === 'benefits'
-                    ? 'border-b-2 border-[#1c1c19] text-[#1c1c19]'
+                    ? 'border-b-2 border-[#1c1c19] text-[#1c1c19] font-bold'
                     : 'text-[#77767b] hover:text-[#1c1c19]'
                 }`}
               >
@@ -228,7 +271,7 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                 onClick={() => setActiveTab('ingredients')}
                 className={`pb-2.5 font-medium transition-colors whitespace-nowrap ${
                   activeTab === 'ingredients'
-                    ? 'border-b-2 border-[#1c1c19] text-[#1c1c19]'
+                    ? 'border-b-2 border-[#1c1c19] text-[#1c1c19] font-bold'
                     : 'text-[#77767b] hover:text-[#1c1c19]'
                 }`}
               >
@@ -238,11 +281,24 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                 onClick={() => setActiveTab('usage')}
                 className={`pb-2.5 font-medium transition-colors whitespace-nowrap ${
                   activeTab === 'usage'
-                    ? 'border-b-2 border-[#1c1c19] text-[#1c1c19]'
+                    ? 'border-b-2 border-[#1c1c19] text-[#1c1c19] font-bold'
                     : 'text-[#77767b] hover:text-[#1c1c19]'
                 }`}
               >
                 CÁCH SỬ DỤNG
+              </button>
+              <button
+                onClick={() => setActiveTab('reviews')}
+                className={`pb-2.5 font-medium transition-colors whitespace-nowrap flex items-center space-x-1.5 ${
+                  activeTab === 'reviews'
+                    ? 'border-b-2 border-[#1c1c19] text-[#1c1c19] font-bold'
+                    : 'text-[#77767b] hover:text-[#1c1c19]'
+                }`}
+              >
+                <span>ĐÁNH GIÁ & NHẬN XÉT</span>
+                <span className="text-[10px] bg-[#74584d] text-white px-2 py-0.5 rounded-full font-sans font-semibold">
+                  ★ {product.rating}
+                </span>
               </button>
             </div>
 
@@ -289,6 +345,14 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                     <span>Nên kết hợp trọn bộ nghi thức 5 bước Alps Pure Essence để đạt hiệu quả dưỡng sáng tối đa sau 28 ngày.</span>
                   </div>
                 </div>
+              )}
+
+              {activeTab === 'reviews' && (
+                <ProductReviewsSection
+                  product={product}
+                  user={user || null}
+                  onShowToast={onShowToast}
+                />
               )}
             </div>
           </div>

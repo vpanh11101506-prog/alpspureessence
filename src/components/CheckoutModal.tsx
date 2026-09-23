@@ -70,6 +70,10 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
   const [formError, setFormError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  // Payment reception verification state (for VietQR & Bank transfer)
+  const [paymentReceived, setPaymentReceived] = useState(false);
+  const [isVerifyingPayment, setIsVerifyingPayment] = useState(false);
+
   // Generate order number for this session
   const [orderNumber] = useState(() => `ALPS-${Math.floor(10000 + Math.random() * 90000)}`);
 
@@ -86,6 +90,21 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
 
   const discountAmount = Math.round((subtotal * discountPercent) / 100);
   const totalAmount = Math.max(0, subtotal - discountAmount + shippingFee);
+
+  const handleCheckPayment = () => {
+    setIsVerifyingPayment(true);
+    setFormError(null);
+    if (onShowToast) {
+      onShowToast('Đang kết nối Napas 247 & MB Bank kiểm tra biến động số dư...');
+    }
+    setTimeout(() => {
+      setIsVerifyingPayment(false);
+      setPaymentReceived(true);
+      if (onShowToast) {
+        onShowToast(`✓ Đã nhận ${totalAmount.toLocaleString('vi-VN')}₫ thành công! Nút đặt hàng đã được kích hoạt.`);
+      }
+    }, 1800);
+  };
 
   const handleApplyPromo = () => {
     const code = promoCode.trim().toUpperCase();
@@ -128,6 +147,10 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
     }
     if (items.length === 0) {
       setFormError('Đơn hàng không có sản phẩm nào.');
+      return;
+    }
+    if ((paymentMethod === 'vietqr' || paymentMethod === 'bank_transfer') && !paymentReceived) {
+      setFormError('Hệ thống chưa nhận được thanh toán. Quý khách vui lòng quét mã QR và bấm "Tôi đã chuyển tiền - Kiểm tra ngay" để kích hoạt đặt hàng.');
       return;
     }
 
@@ -529,6 +552,9 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
                         orderNumber={orderNumber}
                         amount={totalAmount}
                         onShowToast={onShowToast}
+                        isPaymentReceived={paymentReceived}
+                        isVerifying={isVerifyingPayment}
+                        onCheckPayment={handleCheckPayment}
                       />
                     </div>
                   )}
@@ -565,6 +591,9 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
                         orderNumber={orderNumber}
                         amount={totalAmount}
                         onShowToast={onShowToast}
+                        isPaymentReceived={paymentReceived}
+                        isVerifying={isVerifyingPayment}
+                        onCheckPayment={handleCheckPayment}
                       />
                     </div>
                   )}
@@ -709,25 +738,59 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
                   </div>
                 )}
 
-                {/* Confirm Order Button */}
-                <div className="pt-3">
-                  <button
-                    type="button"
-                    onClick={handleSubmitOrder}
-                    disabled={isSubmitting}
-                    className="w-full py-3.5 px-6 rounded-full text-xs font-semibold tracking-wider bg-[#1c1c19] hover:bg-black text-white transition-all shadow-md active:scale-98 flex items-center justify-center space-x-2 disabled:opacity-50"
-                  >
-                    {isSubmitting ? (
-                      <span>ĐANG XỬ LÝ ĐƠN HÀNG...</span>
-                    ) : (
-                      <>
-                        <Sparkles className="w-4 h-4 text-[#fed8c9]" />
-                        <span>XÁC NHẬN ĐẶT HÀNG NGAY</span>
-                        <ArrowRight className="w-4 h-4" />
-                      </>
-                    )}
-                  </button>
-                </div>
+                {/* Confirm Order Button - Activated only after payment is received for VietQR/Bank transfer */}
+                {(() => {
+                  const isPaymentPending =
+                    (paymentMethod === 'vietqr' || paymentMethod === 'bank_transfer') && !paymentReceived;
+                  const isSubmitDisabled = isSubmitting || isPaymentPending;
+
+                  return (
+                    <div className="pt-3 space-y-2">
+                      <button
+                        id="checkout-confirm-btn"
+                        type="button"
+                        onClick={handleSubmitOrder}
+                        disabled={isSubmitDisabled}
+                        className={`w-full py-3.5 px-6 rounded-full text-xs font-semibold tracking-wider transition-all shadow-md flex items-center justify-center space-x-2 ${
+                          isSubmitDisabled
+                            ? 'bg-[#a39f99] text-white/80 cursor-not-allowed opacity-85 shadow-none'
+                            : 'bg-[#1c1c19] hover:bg-black text-white active:scale-98 ring-2 ring-[#74584d]/40'
+                        }`}
+                      >
+                        {isSubmitting ? (
+                          <span>ĐANG XỬ LÝ ĐƠN HÀNG...</span>
+                        ) : isPaymentPending ? (
+                          <>
+                            <Lock className="w-4 h-4 text-[#fed8c9]" />
+                            <span>CHỜ NHẬN ĐƯỢC THANH TOÁN ({totalAmount.toLocaleString('vi-VN')}₫)...</span>
+                          </>
+                        ) : (
+                          <>
+                            <Sparkles className="w-4 h-4 text-[#fed8c9]" />
+                            <span>
+                              {paymentReceived
+                                ? '✓ ĐÃ NHẬN TIỀN • XÁC NHẬN ĐẶT HÀNG NGAY'
+                                : 'XÁC NHẬN ĐẶT HÀNG NGAY'}
+                            </span>
+                            <ArrowRight className="w-4 h-4" />
+                          </>
+                        )}
+                      </button>
+
+                      {isPaymentPending && (
+                        <div className="p-2.5 bg-amber-50/90 border border-amber-200/80 rounded-xl text-center text-[11px] text-amber-900 font-medium space-y-0.5">
+                          <p className="flex items-center justify-center space-x-1 font-semibold text-amber-950">
+                            <Lock className="w-3.5 h-3.5 text-amber-700" />
+                            <span>Nút đặt hàng đang tạm khóa</span>
+                          </p>
+                          <p className="text-[10.5px] text-amber-800">
+                            Quý khách vui lòng quét mã QR chuyển khoản và bấm nút <strong>&ldquo;Tôi đã chuyển tiền - Kiểm tra ngay&rdquo;</strong> ở trên để kích hoạt nút đặt hàng.
+                          </p>
+                        </div>
+                      )}
+                    </div>
+                  );
+                })()}
               </div>
             </div>
           </div>

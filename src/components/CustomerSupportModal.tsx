@@ -94,7 +94,7 @@ export const CustomerSupportModal: React.FC<CustomerSupportModalProps> = ({
     {
       question: 'Làm thế nào để được chuyên gia da liễu Thụy Sĩ lên phác đồ dưỡng da 1:1?',
       answer:
-        'Quý khách có thể gửi yêu cầu trong tab "Gửi Yêu Cầu Hỗ Trợ" hoặc nhắn tin trực tiếp qua Zalo Official Account của Alps. Chuyên viên sẽ phân tích ảnh chụp nền da và thiết lập phác đồ cá nhân hóa hoàn toàn miễn phí.',
+        'Quý khách có thể gửi yêu cầu trong tab "Gửi Yêu Cầu Hỗ Trợ" hoặc nhắn tin trực tiếp qua Facebook Messenger của Alps. Chuyên viên sẽ phân tích ảnh chụp nền da và thiết lập phác đồ cá nhân hóa hoàn toàn miễn phí.',
     },
   ];
 
@@ -257,7 +257,7 @@ export const CustomerSupportModal: React.FC<CustomerSupportModalProps> = ({
                       <span className="font-serif text-lg font-bold text-[#74584d] tracking-wider block">
                         0908 123 489
                       </span>
-                      <span className="text-[10px] text-[#77767b]">Hỗ trợ Zalo & Điện thoại</span>
+                      <span className="text-[10px] text-[#77767b]">Hỗ trợ Messenger & Điện thoại</span>
                     </div>
                     <a
                       href="tel:0908123489"
@@ -270,7 +270,7 @@ export const CustomerSupportModal: React.FC<CustomerSupportModalProps> = ({
                 </div>
               </div>
 
-              {/* Instant Chat Channels: Zalo, Email, Messenger */}
+              {/* Instant Chat Channels: Email, Messenger */}
               <div className="bg-white rounded-2xl p-4 sm:p-5 border border-[#202022]/8 shadow-2xs space-y-3">
                 <div className="flex items-center justify-between">
                   <h4 className="text-xs font-semibold uppercase tracking-wider text-[#1c1c19] flex items-center space-x-1.5">
@@ -280,63 +280,42 @@ export const CustomerSupportModal: React.FC<CustomerSupportModalProps> = ({
                   <span className="text-[11px] text-[#77767b]">Miễn phí</span>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 pt-1">
-                  {/* Zalo OA */}
-                  <a
-                    href="https://zalo.me"
-                    target="_blank"
-                    rel="noreferrer"
-                    className="p-3 bg-[#fcf9f4] hover:bg-[#f5f1eb] rounded-xl border border-[#ebe8e3] transition-all flex items-center justify-between group"
-                  >
-                    <div className="flex items-center space-x-2.5">
-                      <div className="w-8 h-8 rounded-full bg-[#0068ff]/10 text-[#0068ff] flex items-center justify-center font-bold text-xs">
-                        Z
-                      </div>
-                      <div>
-                        <div className="font-semibold text-xs text-[#1c1c19] group-hover:text-[#0068ff] transition-colors">
-                          Zalo Official
-                        </div>
-                        <div className="text-[10px] text-[#77767b]">Alps Pure Skincare</div>
-                      </div>
-                    </div>
-                    <ExternalLink className="w-3.5 h-3.5 text-[#77767b] group-hover:text-[#1c1c19]" />
-                  </a>
-
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
                   {/* Email Support */}
                   <a
-                    href="mailto:cskh@alps.id.vn"
-                    className="p-3 bg-[#fcf9f4] hover:bg-[#f5f1eb] rounded-xl border border-[#ebe8e3] transition-all flex items-center justify-between group"
+                    href="mailto:pure@alps.com"
+                    className="p-3.5 bg-[#fcf9f4] hover:bg-[#f5f1eb] rounded-xl border border-[#ebe8e3] transition-all flex items-center justify-between group"
                   >
                     <div className="flex items-center space-x-2.5">
-                      <div className="w-8 h-8 rounded-full bg-[#74584d]/10 text-[#74584d] flex items-center justify-center">
-                        <Mail className="w-4 h-4" />
+                      <div className="w-9 h-9 rounded-full bg-[#74584d]/10 text-[#74584d] flex items-center justify-center">
+                        <Mail className="w-4.5 h-4.5" />
                       </div>
                       <div>
                         <div className="font-semibold text-xs text-[#1c1c19] group-hover:text-[#74584d] transition-colors">
                           Email Hộp Thư CSKH
                         </div>
-                        <div className="text-[10px] text-[#77767b]">cskh@alps.id.vn</div>
+                        <div className="text-[11px] text-[#77767b] font-mono">pure@alps.com</div>
                       </div>
                     </div>
                     <ExternalLink className="w-3.5 h-3.5 text-[#77767b] group-hover:text-[#1c1c19]" />
                   </a>
 
-                  {/* Messenger */}
+                  {/* Messenger / Facebook Page */}
                   <a
-                    href="https://m.me"
+                    href="https://www.facebook.com/profile.php?id=61594892541329"
                     target="_blank"
-                    rel="noreferrer"
-                    className="p-3 bg-[#fcf9f4] hover:bg-[#f5f1eb] rounded-xl border border-[#ebe8e3] transition-all flex items-center justify-between group"
+                    rel="noopener noreferrer"
+                    className="p-3.5 bg-[#fcf9f4] hover:bg-[#f5f1eb] rounded-xl border border-[#ebe8e3] transition-all flex items-center justify-between group"
                   >
                     <div className="flex items-center space-x-2.5">
-                      <div className="w-8 h-8 rounded-full bg-[#a855f7]/10 text-[#a855f7] flex items-center justify-center">
-                        <MessageCircle className="w-4 h-4" />
+                      <div className="w-9 h-9 rounded-full bg-[#0084ff]/10 text-[#0084ff] flex items-center justify-center">
+                        <MessageCircle className="w-4.5 h-4.5" />
                       </div>
                       <div>
-                        <div className="font-semibold text-xs text-[#1c1c19] group-hover:text-[#a855f7] transition-colors">
-                          Facebook Messenger
+                        <div className="font-semibold text-xs text-[#1c1c19] group-hover:text-[#0084ff] transition-colors">
+                          Facebook Messenger CSKH
                         </div>
-                        <div className="text-[10px] text-[#77767b]">Chat trực tiếp 24/7</div>
+                        <div className="text-[11px] text-[#77767b]">Trực tuyến 24/7 • Chat ngay</div>
                       </div>
                     </div>
                     <ExternalLink className="w-3.5 h-3.5 text-[#77767b] group-hover:text-[#1c1c19]" />

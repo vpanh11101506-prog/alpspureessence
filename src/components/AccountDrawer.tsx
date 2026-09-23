@@ -426,7 +426,7 @@ export const AccountDrawer: React.FC<AccountDrawerProps> = ({
                     <div className="p-3 bg-[#f6f3ee] border border-[#ebe8e3] rounded-xl text-[11px] text-[#74584d] flex items-start space-x-2 animate-fadeIn">
                       <HelpCircle className="w-4 h-4 shrink-0 mt-0.5" />
                       <div>
-                        Để bảo vệ an toàn thông tin khách hàng, vui lòng liên hệ hotline chăm sóc khách hàng <strong>1900 8899</strong> hoặc gửi yêu cầu tới <strong>cskh@alps.id.vn</strong> để đặt lại mật khẩu tức thì.
+                        Để bảo vệ an toàn thông tin khách hàng, vui lòng liên hệ hotline chăm sóc khách hàng <strong>1900 8899</strong> hoặc gửi yêu cầu tới <strong>pure@alps.com</strong> để đặt lại mật khẩu tức thì.
                       </div>
                     </div>
                   )}

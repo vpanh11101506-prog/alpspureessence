@@ -67,8 +67,8 @@ export const Footer: React.FC<FooterProps> = ({ isMobileFrame = false, onOpenSup
               </li>
               <li className="flex items-center space-x-2">
                 <span className="text-[#fed8c9]">Email CSKH:</span>
-                <a href="mailto:cskh@alps.id.vn" className="hover:text-white transition-colors">
-                  cskh@alps.id.vn
+                <a href="mailto:pure@alps.com" className="hover:text-white transition-colors">
+                  pure@alps.com
                 </a>
               </li>
               <li className="flex items-center space-x-2">
@@ -169,7 +169,7 @@ export const Footer: React.FC<FooterProps> = ({ isMobileFrame = false, onOpenSup
               <span className="hover:text-white cursor-pointer">Hotline: 1900 8899</span>
             )}
             <span>•</span>
-            <a href="mailto:cskh@alps.id.vn" className="hover:text-white transition-colors">cskh@alps.id.vn</a>
+            <a href="mailto:pure@alps.com" className="hover:text-white transition-colors">pure@alps.com</a>
             <span>•</span>
             <a href="https://alps.id.vn" target="_blank" rel="noopener noreferrer" className="hover:text-[#fed8c9] text-white font-medium transition-colors">alps.id.vn</a>
           </div>

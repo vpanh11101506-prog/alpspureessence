@@ -85,3 +85,18 @@ export interface UserProfile {
   avatarInitials: string;
   isLoggedIn: boolean;
 }
+
+export interface ProductReview {
+  id: string;
+  productId: string;
+  authorName: string;
+  rating: number; // 1 - 5
+  date: string;
+  isVerifiedBuyer: boolean;
+  skinType?: string;
+  title?: string;
+  comment: string;
+  helpfulCount: number;
+  responseFromBrand?: string;
+}
+

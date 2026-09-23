@@ -100,7 +100,7 @@ export const AICustomerSupportChat: React.FC<AICustomerSupportChatProps> = ({
     } catch (err) {
       console.warn('Chat API error, using intelligent client fallback:', err);
       // Fallback answers for key topics
-      let fallbackText = `Dạ cảm ơn quý khách. Hệ thống đang bảo trì đường truyền AI ngắn hạn. Quý khách vui lòng gọi Hotline 1900 8899 hoặc gửi email cskh@alps.id.vn để chuyên viên tư vấn ngay 24/7 ạ!`;
+      let fallbackText = `Dạ cảm ơn quý khách. Hệ thống đang bảo trì đường truyền AI ngắn hạn. Quý khách vui lòng gọi Hotline 1900 8899 hoặc gửi email pure@alps.com để chuyên viên tư vấn ngay 24/7 ạ!`;
 
       const lower = text.toLowerCase();
       if (lower.includes('đăng nhập') || lower.includes('tài khoản') || lower.includes('mua')) {
