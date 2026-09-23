@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" fill="none">
+  <!-- Rounded elegant cream badge background -->
+  <rect width="64" height="64" rx="14" fill="#fcf9f4" stroke="#e8e2d8" stroke-width="1.5" />
+
+  <!-- Alpine Mountain Emblem -->
+  <g transform="translate(4, 2) scale(0.35)">
+    <!-- Golden back ridges -->
+    <path d="M20 62 L32 44 L44 62" stroke="#c4a572" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M30 62 L50 28 L70 62" stroke="#c4a572" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M50 28 L40 62" stroke="#c4a572" stroke-width="2.5" stroke-linecap="round" />
+    <path d="M90 62 L110 28 L130 62" stroke="#c4a572" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M110 28 L120 62" stroke="#c4a572" stroke-width="2.5" stroke-linecap="round" />
+    <path d="M116 62 L128 44 L140 62" stroke="#c4a572" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+
+    <!-- Central Majestic Peak -->
+    <path d="M80 12 L52 62 L80 62 Z" fill="#cad5dc" stroke="#23211f" stroke-width="4" stroke-linejoin="round" />
+    <path d="M80 12 L80 62 L108 62 Z" fill="#f0f5f7" stroke="#23211f" stroke-width="4" stroke-linejoin="round" />
+    <path d="M80 12 L80 62" stroke="#23211f" stroke-width="4.5" stroke-linecap="round" />
+
+    <!-- Evergreen Pine Trees -->
+    <g fill="#2d4a36">
+      <path d="M26 50 L29 55 L23 55 Z" />
+      <path d="M26 53 L30 59 L22 59 Z" />
+      <path d="M26 57 L31 63 L21 63 Z" />
+      <path d="M34 46 L37 51 L31 51 Z" />
+      <path d="M34 49 L38 56 L30 56 Z" />
+      <path d="M34 54 L39 63 L29 63 Z" />
+      <path d="M126 46 L129 51 L123 51 Z" />
+      <path d="M126 49 L130 56 L122 56 Z" />
+      <path d="M126 54 L131 63 L121 63 Z" />
+      <path d="M134 50 L137 55 L131 55 Z" />
+      <path d="M134 53 L138 59 L130 59 Z" />
+      <path d="M134 57 L139 63 L129 63 Z" />
+    </g>
+
+    <!-- Seedling sprout -->
+    <path d="M80 62 C75 59 73 54 78 52 C81 54 81 59 80 62 Z" fill="#4d5f49" stroke="#2d402d" stroke-width="2" />
+    <path d="M80 62 C85 59 87 54 82 52 C79 54 79 59 80 62 Z" fill="#4d5f49" stroke="#2d402d" stroke-width="2" />
+    <circle cx="80" cy="62" r="2.5" fill="#74584d" />
+
+    <!-- Base and lake ripples -->
+    <path d="M20 63.5 L140 63.5" stroke="#c4a572" stroke-width="3" stroke-linecap="round" />
+    <path d="M32 68 Q56 70 80 68 Q104 66 128 68" stroke="#c4a572" stroke-width="2.5" stroke-linecap="round" />
+  </g>
+
+  <!-- Typography: ALPS -->
+  <text
+    x="33"
+    y="44"
+    font-family="'Noto Serif', serif, Georgia"
+    font-size="14"
+    font-weight="600"
+    fill="#1c1c19"
+    letter-spacing="3"
+    text-anchor="middle"
+  >ALPS</text>
+
+  <!-- Subtitle: PURE ESSENCE -->
+  <text
+    x="32"
+    y="54"
+    font-family="'Plus Jakarta Sans', system-ui, sans-serif"
+    font-size="4.8"
+    font-weight="700"
+    fill="#74584d"
+    letter-spacing="1.4"
+    text-anchor="middle"
+  >PURE ESSENCE</text>
+</svg>

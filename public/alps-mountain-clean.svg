@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 80" width="100%" height="100%" fill="none">
+  <!-- DÃY NÚI VÀNG CÁT THỤY SĨ (GOLDEN ALPINE PEAKS) -->
+  <path d="M20 62 L32 44 L44 62" stroke="#c4a572" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" />
+  <path d="M30 62 L50 28 L70 62" stroke="#c4a572" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+  <path d="M50 28 L40 62" stroke="#c4a572" stroke-width="1.2" stroke-linecap="round" />
+  <path d="M90 62 L110 28 L130 62" stroke="#c4a572" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+  <path d="M110 28 L120 62" stroke="#c4a572" stroke-width="1.2" stroke-linecap="round" />
+  <path d="M116 62 L128 44 L140 62" stroke="#c4a572" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" />
+
+  <!-- ĐỈNH NÚI BĂNG HÀ TRUNG TÂM (CENTRAL GLACIER PEAK) -->
+  <path d="M80 12 L52 62 L80 62 Z" fill="#cad5dc" stroke="#23211f" stroke-width="1.8" stroke-linejoin="round" />
+  <path d="M80 12 L80 62 L108 62 Z" fill="#f0f5f7" stroke="#23211f" stroke-width="1.8" stroke-linejoin="round" />
+  <path d="M80 12 L80 62" stroke="#23211f" stroke-width="2.2" stroke-linecap="round" />
+
+  <!-- VÂN NÚI VÀ ĐƯỜNG NỨT BĂNG -->
+  <path d="M68 44 L80 36" stroke="#23211f" stroke-width="1.1" stroke-linecap="round" opacity="0.65" />
+  <path d="M72 54 L80 48" stroke="#23211f" stroke-width="1.1" stroke-linecap="round" opacity="0.65" />
+  <path d="M92 42 L80 34" stroke="#23211f" stroke-width="1.1" stroke-linecap="round" opacity="0.65" />
+  <path d="M96 52 L80 46" stroke="#23211f" stroke-width="1.1" stroke-linecap="round" opacity="0.65" />
+
+  <!-- RỪNG THÔNG BÁCH XANH -->
+  <g fill="#2d4a36" stroke="#1d3325" stroke-width="0.5">
+    <path d="M26 50 L29 55 L23 55 Z" />
+    <path d="M26 53 L30 59 L22 59 Z" />
+    <path d="M26 57 L31 63 L21 63 Z" />
+    <path d="M34 46 L37 51 L31 51 Z" />
+    <path d="M34 49 L38 56 L30 56 Z" />
+    <path d="M34 54 L39 63 L29 63 Z" />
+    <path d="M42 51 L45 56 L39 56 Z" />
+    <path d="M42 54 L46 62 L38 62 Z" />
+    <path d="M118 51 L121 56 L115 56 Z" />
+    <path d="M118 54 L122 62 L114 62 Z" />
+    <path d="M126 46 L129 51 L123 51 Z" />
+    <path d="M126 49 L130 56 L122 56 Z" />
+    <path d="M126 54 L131 63 L121 63 Z" />
+    <path d="M134 50 L137 55 L131 55 Z" />
+    <path d="M134 53 L138 59 L130 59 Z" />
+    <path d="M134 57 L139 63 L129 63 Z" />
+  </g>
+
+  <!-- MẦM SỐNG THỰC VẬT ĐẦM CHỒI Ở CHÂN NÚI -->
+  <path d="M80 62 C75 59 73 54 78 52 C81 54 81 59 80 62 Z" fill="#4d5f49" stroke="#2d402d" stroke-width="0.9" />
+  <path d="M80 62 C85 59 87 54 82 52 C79 54 79 59 80 62 Z" fill="#4d5f49" stroke="#2d402d" stroke-width="0.9" />
+  <circle cx="80" cy="62" r="1.2" fill="#74584d" />
+
+  <!-- ĐƯỜNG CHÂN TRỜI & GỢN SÓNG HỒ NƯỚC BĂNG -->
+  <path d="M20 63.5 L140 63.5" stroke="#c4a572" stroke-width="1.3" stroke-linecap="round" />
+  <path d="M32 67.5 Q56 69 80 67.5 Q104 66 128 67.5" stroke="#c4a572" stroke-width="1.1" stroke-linecap="round" opacity="0.85" />
+  <path d="M44 71.5 Q62 73 80 71.5 Q98 70 116 71.5" stroke="#c4a572" stroke-width="0.9" stroke-linecap="round" opacity="0.75" />
+</svg>

@@ -1,0 +1,8 @@
+{
+  "name": " Alps Skincare Pure Essence",
+  "description": "Website thương hiệu mỹ phẩm thuần chay chuẩn da liễu Thụy Sĩ ",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
