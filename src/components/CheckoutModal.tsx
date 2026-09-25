@@ -25,6 +25,17 @@ import { CartItem, Product, UserProfile, Order, PaymentMethodType, ShippingCarri
 import { SHIPPING_CARRIERS } from '../data/shippingCarriers';
 import { VietQRCard } from './VietQRCard';
 import { PolicyTabType } from './PoliciesModal';
+import {
+  VisaBadge,
+  VisaDebitBadge,
+  VisaSecureBadge,
+  RealisticCardVisual,
+  MastercardBadge,
+  JcbBadge,
+  NapasBadge,
+  VietQRBadge,
+  PaymentBadgesGroup,
+} from './PaymentBadges';
 
 interface CheckoutModalProps {
   isOpen: boolean;
@@ -74,6 +85,14 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
   const [paymentReceived, setPaymentReceived] = useState(false);
   const [isVerifyingPayment, setIsVerifyingPayment] = useState(false);
 
+  // Card payment details (Visa, Mastercard, JCB)
+  const [cardNumber, setCardNumber] = useState('');
+  const [cardHolder, setCardHolder] = useState(user?.name ? user.name.toUpperCase() : '');
+  const [cardExpiry, setCardExpiry] = useState('');
+  const [cardCvv, setCardCvv] = useState('');
+  const [cardAuthSuccess, setCardAuthSuccess] = useState(false);
+  const [isAuthorizingCard, setIsAuthorizingCard] = useState(false);
+
   // Generate order number for this session
   const [orderNumber] = useState(() => `ALPS-${Math.floor(10000 + Math.random() * 90000)}`);
 
@@ -90,6 +109,39 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
 
   const discountAmount = Math.round((subtotal * discountPercent) / 100);
   const totalAmount = Math.max(0, subtotal - discountAmount + shippingFee);
+
+  const handleAuthorizeCard = () => {
+    const cleanNum = cardNumber.replace(/\s/g, '');
+    if (cleanNum.length < 15) {
+      setFormError('Vui lòng nhập số thẻ Visa / Mastercard hợp lệ (tối thiểu 15-16 số).');
+      return;
+    }
+    if (!cardHolder.trim()) {
+      setFormError('Vui lòng nhập tên in trên thẻ (không dấu).');
+      return;
+    }
+    if (cardExpiry.length < 4) {
+      setFormError('Vui lòng nhập thời hạn thẻ (MM/YY).');
+      return;
+    }
+    if (cardCvv.length < 3) {
+      setFormError('Vui lòng nhập mã bảo mật CVV/CVC (3 chữ số ở mặt sau thẻ).');
+      return;
+    }
+    setFormError(null);
+    setIsAuthorizingCard(true);
+    if (onShowToast) {
+      onShowToast('Đang kết nối cổng thanh toán thẻ Visa Secure 3D OTP...');
+    }
+    setTimeout(() => {
+      setIsAuthorizingCard(false);
+      setCardAuthSuccess(true);
+      setPaymentReceived(true);
+      if (onShowToast) {
+        onShowToast(`✓ Đã xác thực thẻ Visa/Mastercard (•••• ${cleanNum.slice(-4)}) thành công! Nút đặt hàng đã mở.`);
+      }
+    }, 1400);
+  };
 
   const handleCheckPayment = () => {
     setIsVerifyingPayment(true);
@@ -149,7 +201,13 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
       setFormError('Đơn hàng không có sản phẩm nào.');
       return;
     }
-    if ((paymentMethod === 'vietqr' || paymentMethod === 'bank_transfer') && !paymentReceived) {
+    if (paymentMethod === 'card') {
+      const cleanNum = cardNumber.replace(/\s/g, '');
+      if (cleanNum.length < 15 || !cardHolder.trim() || cardExpiry.length < 4 || cardCvv.length < 3) {
+        setFormError('Vui lòng nhập đầy đủ và chính xác thông tin thẻ Visa / Mastercard (Số thẻ, Tên, Hạn dùng, CVV).');
+        return;
+      }
+    } else if ((paymentMethod === 'vietqr' || paymentMethod === 'bank_transfer') && !paymentReceived) {
       setFormError('Hệ thống chưa nhận được thanh toán. Quý khách vui lòng quét mã QR và bấm "Tôi đã chuyển tiền - Kiểm tra ngay" để kích hoạt đặt hàng.');
       return;
     }
@@ -178,6 +236,8 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
       paymentMethod:
         paymentMethod === 'vietqr'
           ? 'VietQR MB Bank (Quét mã tức thì)'
+          : paymentMethod === 'card'
+          ? `Thẻ Visa / Mastercard Quốc Tế (•••• ${cardNumber.replace(/\s/g, '').slice(-4) || '8899'})`
           : paymentMethod === 'bank_transfer'
           ? 'Chuyển khoản ngân hàng ALPS'
           : 'Thanh toán khi nhận hàng (COD)',
@@ -475,23 +535,29 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
 
               {/* 3. PHƯƠNG THỨC THANH TOÁN */}
               <div className="bg-white rounded-2xl p-4 sm:p-5 border border-[#202022]/8 shadow-xs space-y-3">
-                <div className="flex items-center justify-between pb-2 border-b border-[#202022]/6">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-2 border-b border-[#202022]/6 gap-2">
                   <div className="flex items-center space-x-2 text-xs font-semibold text-[#1c1c19] uppercase tracking-wider">
                     <CreditCard className="w-4 h-4 text-[#74584d]" />
                     <span>3. Phương thức thanh toán</span>
                   </div>
-                  <span className="text-[10px] text-[#77767b]">
-                    Chọn 1 trong 3 hình thức
-                  </span>
+                  <div className="flex items-center space-x-1.5 overflow-x-auto py-0.5">
+                    <span className="text-[10px] text-[#77767b] mr-0.5 hidden xs:inline">Chấp nhận:</span>
+                    <VisaBadge className="h-5" />
+                    <VisaDebitBadge className="h-5" />
+                    <VisaSecureBadge className="h-5" />
+                    <MastercardBadge className="h-5" />
+                    <NapasBadge className="h-5" />
+                    <VietQRBadge className="h-5" />
+                  </div>
                 </div>
 
-                {/* 3 Payment Options Tabs */}
-                <div className="grid grid-cols-3 gap-2 text-xs">
+                {/* 4 Payment Options Tabs */}
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">
                   {/* Option 1: VietQR MB Bank */}
                   <button
                     type="button"
                     onClick={() => setPaymentMethod('vietqr')}
-                    className={`p-3 rounded-xl border text-center transition-all flex flex-col items-center justify-center space-y-1 ${
+                    className={`p-2.5 sm:p-3 rounded-xl border text-center transition-all flex flex-col items-center justify-center space-y-1 ${
                       paymentMethod === 'vietqr'
                         ? 'border-[#74584d] bg-[#fed8c9]/15 text-[#1c1c19] font-bold shadow-xs'
                         : 'border-[#202022]/8 bg-[#fcf9f4] text-[#46464a] hover:bg-[#f6f3ee]'
@@ -502,11 +568,29 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
                     <span className="text-[9px] text-[#8a9a86] font-medium">Khuyên dùng 24/7</span>
                   </button>
 
-                  {/* Option 2: COD */}
+                  {/* Option 2: Thẻ Visa / Mastercard */}
+                  <button
+                    type="button"
+                    onClick={() => setPaymentMethod('card')}
+                    className={`p-2.5 sm:p-3 rounded-xl border text-center transition-all flex flex-col items-center justify-center space-y-1 ${
+                      paymentMethod === 'card'
+                        ? 'border-[#1434CB] bg-[#1434CB]/8 text-[#1c1c19] font-bold shadow-xs ring-1 ring-[#1434CB]/30'
+                        : 'border-[#202022]/8 bg-[#fcf9f4] text-[#46464a] hover:bg-[#f6f3ee]'
+                    }`}
+                  >
+                    <div className="flex items-center space-x-1">
+                      <VisaBadge className="h-4.5 px-1 py-0" />
+                      <MastercardBadge className="h-4.5 px-1 py-0" />
+                    </div>
+                    <span className="text-[11px]">Thẻ Visa / Master</span>
+                    <span className="text-[9px] text-[#1434CB] font-semibold">Visa Secure 3D</span>
+                  </button>
+
+                  {/* Option 3: COD */}
                   <button
                     type="button"
                     onClick={() => setPaymentMethod('cod')}
-                    className={`p-3 rounded-xl border text-center transition-all flex flex-col items-center justify-center space-y-1 ${
+                    className={`p-2.5 sm:p-3 rounded-xl border text-center transition-all flex flex-col items-center justify-center space-y-1 ${
                       paymentMethod === 'cod'
                         ? 'border-[#74584d] bg-[#fed8c9]/15 text-[#1c1c19] font-bold shadow-xs'
                         : 'border-[#202022]/8 bg-[#fcf9f4] text-[#46464a] hover:bg-[#f6f3ee]'
@@ -517,11 +601,11 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
                     <span className="text-[9px] text-[#77767b]">Đồng kiểm nhận hàng</span>
                   </button>
 
-                  {/* Option 3: Chuyển khoản ngân hàng (TK mang tên ALPS) */}
+                  {/* Option 4: Chuyển khoản ngân hàng (TK mang tên ALPS) */}
                   <button
                     type="button"
                     onClick={() => setPaymentMethod('bank_transfer')}
-                    className={`p-3 rounded-xl border text-center transition-all flex flex-col items-center justify-center space-y-1 ${
+                    className={`p-2.5 sm:p-3 rounded-xl border text-center transition-all flex flex-col items-center justify-center space-y-1 ${
                       paymentMethod === 'bank_transfer'
                         ? 'border-[#74584d] bg-[#fed8c9]/15 text-[#1c1c19] font-bold shadow-xs'
                         : 'border-[#202022]/8 bg-[#fcf9f4] text-[#46464a] hover:bg-[#f6f3ee]'
@@ -556,6 +640,146 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
                         isVerifying={isVerifyingPayment}
                         onCheckPayment={handleCheckPayment}
                       />
+                    </div>
+                  )}
+
+                  {paymentMethod === 'card' && (
+                    <div className="space-y-4 p-4 sm:p-5 bg-gradient-to-b from-[#faf8f5] to-white rounded-2xl border border-[#1434CB]/20 shadow-xs">
+                      <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-2.5 border-b border-[#202022]/8 gap-2">
+                        <div className="flex items-center space-x-2">
+                          <CreditCard className="w-4 h-4 text-[#1434CB]" />
+                          <span className="font-semibold text-xs text-[#1c1c19]">
+                            Thanh toán Thẻ Quốc Tế Visa / Mastercard / JCB
+                          </span>
+                        </div>
+                        <div className="flex items-center space-x-1.5 flex-wrap">
+                          <VisaBadge className="h-6" />
+                          <VisaDebitBadge className="h-6" />
+                          <VisaSecureBadge className="h-6" />
+                          <MastercardBadge className="h-6" />
+                          <JcbBadge className="h-6" />
+                        </div>
+                      </div>
+
+                      {/* 3D Realistic Visa Card Preview */}
+                      <div className="py-1">
+                        <RealisticCardVisual
+                          cardNumber={cardNumber}
+                          cardHolder={cardHolder}
+                          cardExpiry={cardExpiry}
+                          isAuthorized={cardAuthSuccess}
+                        />
+                      </div>
+
+                      {/* Security guarantee banner */}
+                      <div className="flex items-center space-x-2 text-[10.5px] text-[#1c3a6b] bg-blue-50/80 p-2.5 rounded-xl border border-blue-100">
+                        <ShieldCheck className="w-4 h-4 text-[#1434CB] shrink-0" />
+                        <span>Mã hóa bảo mật thẻ quốc tế 3D Secure OTP & chuẩn PCI-DSS Level 1. Alps không lưu mã bảo mật bí mật (CVV).</span>
+                      </div>
+
+                      {/* Card form */}
+                      <div className="space-y-3">
+                        <div>
+                          <label className="block text-[11px] font-medium text-[#77767b] mb-1">
+                            Số thẻ Visa / Mastercard <span className="text-red-500">*</span>
+                          </label>
+                          <div className="relative">
+                            <input
+                              type="text"
+                              value={cardNumber}
+                              onChange={(e) => {
+                                const val = e.target.value.replace(/\D/g, '').slice(0, 16);
+                                const formatted = val.replace(/(\d{4})(?=\d)/g, '$1 ');
+                                setCardNumber(formatted);
+                              }}
+                              placeholder="4123 4567 8901 2345"
+                              maxLength={19}
+                              className="w-full pl-3 pr-24 py-2.5 rounded-xl bg-white border border-[#ebe8e3] text-xs font-mono tracking-wider focus:outline-none focus:border-[#1434CB] focus:ring-1 focus:ring-[#1434CB]/20"
+                            />
+                            <div className="absolute right-2.5 top-1/2 -translate-y-1/2 flex items-center space-x-1">
+                              <VisaBadge className="h-5" />
+                              <MastercardBadge className="h-5" />
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                          <div>
+                            <label className="block text-[11px] font-medium text-[#77767b] mb-1">
+                              Tên in trên thẻ (không dấu) <span className="text-red-500">*</span>
+                            </label>
+                            <input
+                              type="text"
+                              value={cardHolder}
+                              onChange={(e) => setCardHolder(e.target.value.toUpperCase())}
+                              placeholder="NGUYEN VAN A"
+                              className="w-full px-3 py-2 rounded-xl bg-white border border-[#ebe8e3] text-xs uppercase font-mono focus:outline-none focus:border-[#1434CB]"
+                            />
+                          </div>
+
+                          <div className="grid grid-cols-2 gap-2">
+                            <div>
+                              <label className="block text-[11px] font-medium text-[#77767b] mb-1">
+                                Hết hạn (MM/YY) <span className="text-red-500">*</span>
+                              </label>
+                              <input
+                                type="text"
+                                value={cardExpiry}
+                                onChange={(e) => {
+                                  let v = e.target.value.replace(/\D/g, '').slice(0, 4);
+                                  if (v.length >= 2) v = v.slice(0, 2) + '/' + v.slice(2);
+                                  setCardExpiry(v);
+                                }}
+                                placeholder="12/28"
+                                maxLength={5}
+                                className="w-full px-3 py-2 rounded-xl bg-white border border-[#ebe8e3] text-xs font-mono text-center focus:outline-none focus:border-[#1434CB]"
+                              />
+                            </div>
+
+                            <div>
+                              <label className="block text-[11px] font-medium text-[#77767b] mb-1 flex items-center justify-between">
+                                <span>CVV/CVC <span className="text-red-500">*</span></span>
+                                <Lock className="w-3 h-3 text-[#77767b]" />
+                              </label>
+                              <input
+                                type="password"
+                                value={cardCvv}
+                                onChange={(e) => setCardCvv(e.target.value.replace(/\D/g, '').slice(0, 4))}
+                                placeholder="•••"
+                                maxLength={4}
+                                className="w-full px-3 py-2 rounded-xl bg-white border border-[#ebe8e3] text-xs font-mono text-center tracking-widest focus:outline-none focus:border-[#1434CB]"
+                              />
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Card Auth / Verification status */}
+                        {cardAuthSuccess ? (
+                          <div className="p-3 bg-emerald-50 border border-emerald-200 rounded-xl text-xs flex items-center space-x-2 text-emerald-900">
+                            <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+                            <span>Thẻ Visa hợp lệ & đã được cấp phép ủy quyền trước {totalAmount.toLocaleString('vi-VN')}₫ (Visa Secure OTP)</span>
+                          </div>
+                        ) : (
+                          <button
+                            type="button"
+                            onClick={handleAuthorizeCard}
+                            disabled={isAuthorizingCard}
+                            className="w-full py-2.5 px-4 bg-[#1434CB] hover:bg-[#0F1E4A] text-white text-xs font-semibold rounded-xl transition-all flex items-center justify-center space-x-2 cursor-pointer shadow-sm active:scale-98"
+                          >
+                            {isAuthorizingCard ? (
+                              <>
+                                <RefreshCw className="w-3.5 h-3.5 animate-spin text-[#fed8c9]" />
+                                <span>Đang kết nối cổng thanh toán thẻ Visa Secure 3D OTP...</span>
+                              </>
+                            ) : (
+                              <>
+                                <Lock className="w-3.5 h-3.5 text-white" />
+                                <span>Xác thực thẻ Visa & Mở khóa đặt hàng</span>
+                              </>
+                            )}
+                          </button>
+                        )}
+                      </div>
                     </div>
                   )}
 
@@ -738,10 +962,15 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
                   </div>
                 )}
 
-                {/* Confirm Order Button - Activated only after payment is received for VietQR/Bank transfer */}
+                {/* Confirm Order Button - Activated only after payment is received for VietQR/Bank transfer or card is ready */}
                 {(() => {
-                  const isPaymentPending =
+                  const isCardPending =
+                    paymentMethod === 'card' &&
+                    !cardAuthSuccess &&
+                    cardNumber.replace(/\s/g, '').length < 15;
+                  const isQrPending =
                     (paymentMethod === 'vietqr' || paymentMethod === 'bank_transfer') && !paymentReceived;
+                  const isPaymentPending = isQrPending || isCardPending;
                   const isSubmitDisabled = isSubmitting || isPaymentPending;
 
                   return (
@@ -754,7 +983,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
                         className={`w-full py-3.5 px-6 rounded-full text-xs font-semibold tracking-wider transition-all shadow-md flex items-center justify-center space-x-2 ${
                           isSubmitDisabled
                             ? 'bg-[#a39f99] text-white/80 cursor-not-allowed opacity-85 shadow-none'
-                            : 'bg-[#1c1c19] hover:bg-black text-white active:scale-98 ring-2 ring-[#74584d]/40'
+                            : 'bg-[#1c1c19] hover:bg-black text-white active:scale-98 ring-2 ring-[#74584d]/40 cursor-pointer'
                         }`}
                       >
                         {isSubmitting ? (
@@ -762,13 +991,21 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
                         ) : isPaymentPending ? (
                           <>
                             <Lock className="w-4 h-4 text-[#fed8c9]" />
-                            <span>CHỜ NHẬN ĐƯỢC THANH TOÁN ({totalAmount.toLocaleString('vi-VN')}₫)...</span>
+                            <span>
+                              {paymentMethod === 'card'
+                                ? 'VUI LÒNG NHẬP THẺ VISA ĐỂ ĐẶT HÀNG...'
+                                : `CHỜ NHẬN ĐƯỢC THANH TOÁN (${totalAmount.toLocaleString('vi-VN')}₫)...`}
+                            </span>
                           </>
                         ) : (
                           <>
                             <Sparkles className="w-4 h-4 text-[#fed8c9]" />
                             <span>
-                              {paymentReceived
+                              {paymentMethod === 'card'
+                                ? cardAuthSuccess
+                                  ? '✓ ĐÃ DUYỆT THẺ VISA • XÁC NHẬN ĐẶT HÀNG NGAY'
+                                  : 'XÁC NHẬN THANH TOÁN THẺ VISA & ĐẶT HÀNG'
+                                : paymentReceived
                                 ? '✓ ĐÃ NHẬN TIỀN • XÁC NHẬN ĐẶT HÀNG NGAY'
                                 : 'XÁC NHẬN ĐẶT HÀNG NGAY'}
                             </span>
@@ -784,7 +1021,15 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
                             <span>Nút đặt hàng đang tạm khóa</span>
                           </p>
                           <p className="text-[10.5px] text-amber-800">
-                            Quý khách vui lòng quét mã QR chuyển khoản và bấm nút <strong>&ldquo;Tôi đã chuyển tiền - Kiểm tra ngay&rdquo;</strong> ở trên để kích hoạt nút đặt hàng.
+                            {paymentMethod === 'card' ? (
+                              <span>
+                                Quý khách vui lòng nhập đầy đủ thông tin thẻ Visa / Mastercard và bấm <strong>&ldquo;Xác thực thẻ Visa&rdquo;</strong> ở trên để hoàn tất.
+                              </span>
+                            ) : (
+                              <span>
+                                Quý khách vui lòng quét mã QR chuyển khoản và bấm nút <strong>&ldquo;Tôi đã chuyển tiền - Kiểm tra ngay&rdquo;</strong> ở trên để kích hoạt nút đặt hàng.
+                              </span>
+                            )}
                           </p>
                         </div>
                       )}

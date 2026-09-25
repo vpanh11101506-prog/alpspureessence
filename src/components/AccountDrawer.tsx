@@ -1101,7 +1101,7 @@ export const AccountDrawer: React.FC<AccountDrawerProps> = ({
                     <span className="text-[10px] text-[#8a9a86] font-medium">1900 8899</span>
                   </div>
                   <p className="text-[11px] text-[#77767b] leading-relaxed">
-                    Đội ngũ bác sĩ và chuyên viên da liễu Thụy Sĩ luôn sẵn sàng tư vấn phác đồ sử dụng hoặc hỗ trợ đổi trả hàng 30 ngày.
+                    Đội ngũ chuyên viên tư vấn da liễu Thụy Sĩ luôn sẵn sàng hỗ trợ phác đồ sử dụng hoặc chính sách đổi trả hàng 30 ngày.
                   </p>
                   <button
                     onClick={() => {

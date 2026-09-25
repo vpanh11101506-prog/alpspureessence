@@ -20,7 +20,7 @@ const QUICK_PROMPTS = [
   'Khách hàng muốn mua hàng cần đăng nhập tài khoản thế nào?',
   'Serum Radiance Glow mờ thâm sáng da có hiệu quả không?',
   'Chính sách đổi trả 30 ngày & phí vận chuyển tại alps.id.vn',
-  'Bộ đôi kem chống nắng & tẩy trang Alps có cồn không?',
+  'Bộ đôi thiết yếu toner và mặt nạ Alps dùng theo thứ tự nào?',
 ];
 
 export const AICustomerSupportChat: React.FC<AICustomerSupportChatProps> = ({

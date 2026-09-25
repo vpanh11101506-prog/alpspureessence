@@ -232,7 +232,7 @@ export const CustomerSupportModal: React.FC<CustomerSupportModalProps> = ({
                   </div>
                 </div>
 
-                {/* Hotline 2: Tư vấn da liễu VIP */}
+                {/* Hotline 2: Tư vấn da liễu chuyên sâu */}
                 <div className="bg-white rounded-2xl p-4 border border-[#202022]/8 shadow-2xs hover:border-[#74584d]/30 transition-all flex flex-col justify-between">
                   <div>
                     <div className="flex items-center justify-between">
@@ -245,7 +245,7 @@ export const CustomerSupportModal: React.FC<CustomerSupportModalProps> = ({
                       </span>
                     </div>
                     <h4 className="font-serif text-base font-semibold text-[#1c1c19] mt-2">
-                      Hotline Bác Sĩ & Chuyên Viên Da Liễu
+                      Hotline Chuyên Viên Tư Vấn Da Liễu
                     </h4>
                     <p className="text-xs text-[#77767b] mt-0.5">
                       Tư vấn phác đồ kết hợp sản phẩm phục hồi & tái sinh chuyên sâu
@@ -340,7 +340,7 @@ export const CustomerSupportModal: React.FC<CustomerSupportModalProps> = ({
                       </span>
                     </div>
                     <p className="text-[#46464a] leading-relaxed text-[11px]">
-                      Tầng 1, Tòa nhà Landmark 81, 720A Điện Biên Phủ, Phường 22, Quận Bình Thạnh, TP. Hồ Chí Minh
+                      30 D. Trịnh Đình Thảo, Tân Phú, Hồ Chí Minh
                     </p>
                     <p className="text-[11px] text-[#77767b] pt-1">
                       Hotline đón tiếp: <strong className="text-[#1c1c19]">028 3912 8899</strong>
@@ -364,11 +364,9 @@ export const CustomerSupportModal: React.FC<CustomerSupportModalProps> = ({
                   </div>
                 </div>
 
-                {/* Global Laboratory */}
                 <div className="pt-2 flex items-center justify-between text-[11px] text-[#77767b] border-t border-[#f0ede9]">
                   <span className="flex items-center space-x-1">
-                    <span className="text-[#ba1a1a] font-bold">🇨🇭</span>
-                    <span>Zurich Laboratory & HQ: Bahnhofstrasse 45, 8001 Zürich, Thụy Sĩ</span>
+                    <span>✨ Hệ thống boutique chính hãng ALPS</span>
                   </span>
                   <span className="text-[#74584d] font-medium hidden sm:inline">Chuẩn Quốc Tế ISO 22716</span>
                 </div>
@@ -619,7 +617,7 @@ export const CustomerSupportModal: React.FC<CustomerSupportModalProps> = ({
         <div className="p-3 sm:p-4 bg-[#ffffff] border-t border-[#ebe8e3] flex flex-col sm:flex-row items-center justify-between text-xs text-[#77767b] gap-2 shrink-0">
           <div className="flex items-center space-x-2 text-[11px]">
             <Sparkles className="w-3.5 h-3.5 text-[#74584d]" />
-            <span>Alps Skincare Pure Essence • Zurich, Switzerland</span>
+            <span>Alps Skincare Pure Essence • Dược Mỹ Phẩm Cao Cấp</span>
           </div>
 
           <button

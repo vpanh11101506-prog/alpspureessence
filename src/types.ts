@@ -37,7 +37,7 @@ export type CartItem = CheckoutItem;
 export type ActiveTab = 'home' | 'catalog' | 'cart' | 'routine' | 'account' | 'policies';
 export type ViewMode = 'desktop' | 'mobile' | 'responsive';
 
-export type PaymentMethodType = 'cod' | 'vietqr' | 'bank_transfer';
+export type PaymentMethodType = 'cod' | 'vietqr' | 'bank_transfer' | 'card';
 
 export interface ShippingCarrier {
   id: 'ghtk' | 'ghn' | 'express' | 'viettel';

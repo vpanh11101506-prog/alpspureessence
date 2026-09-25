@@ -1,6 +1,7 @@
 import React from 'react';
 import { ArrowRight, ShieldCheck, Award, HeartHandshake, Phone, Headphones, Mail, MapPin } from 'lucide-react';
 import { AlpsLogo } from './AlpsLogo';
+import { PaymentBadgesGroup, VisaBadge, VisaDebitBadge, MastercardBadge, NapasBadge, VietQRBadge } from './PaymentBadges';
 
 interface FooterProps {
   isMobileFrame?: boolean;
@@ -27,8 +28,20 @@ export const Footer: React.FC<FooterProps> = ({ isMobileFrame = false, onOpenSup
               Thương hiệu dược mỹ phẩm thuần chay tiên phong chưng cất tại Zurich, Thụy Sĩ. Đánh thức vẻ rạng ngời thuần khiết của làn da.
             </p>
             <div className="pt-2 text-[11px] text-[#898789] space-y-1">
-              <p>🇨🇭 Zurich: Bahnhofstrasse 45, 8001</p>
-              <p>🇻🇳 TP.HCM: Tầng 1, Landmark 81, P. 22, Bình Thạnh</p>
+              <p><span className="text-[#fed8c9] font-medium">Chi nhánh TPHCM:</span> 30 D. Trịnh Đình Thảo, Tân Phú, Hồ Chí Minh</p>
+            </div>
+            {/* Visa payment images directly under HCM branch */}
+            <div className="pt-2.5 space-y-1.5">
+              <span className="block text-[10px] text-[#fed8c9] font-medium tracking-wide uppercase">
+                Chấp nhận thẻ & thanh toán nhanh:
+              </span>
+              <div className="flex flex-wrap items-center gap-1.5">
+                <VisaBadge className="h-6" />
+                <VisaDebitBadge className="h-6" />
+                <MastercardBadge className="h-6" />
+                <NapasBadge className="h-6" />
+                <VietQRBadge className="h-6" />
+              </div>
             </div>
           </div>
 
@@ -57,12 +70,6 @@ export const Footer: React.FC<FooterProps> = ({ isMobileFrame = false, onOpenSup
                 <span className="text-[#fed8c9]">Hotline 24/7:</span>
                 <a href="tel:19008899" className="text-white font-bold hover:text-[#fed8c9] transition-colors">
                   1900 8899 (Miễn cước)
-                </a>
-              </li>
-              <li className="flex items-center space-x-2">
-                <span className="text-[#fed8c9]">Bác sĩ VIP:</span>
-                <a href="tel:0908123489" className="text-white hover:text-[#fed8c9] transition-colors">
-                  0908 123 489
                 </a>
               </li>
               <li className="flex items-center space-x-2">
@@ -129,6 +136,22 @@ export const Footer: React.FC<FooterProps> = ({ isMobileFrame = false, onOpenSup
             </div>
             <div className="text-[10px] text-[#898789] pt-1">
               Phục vụ từ 8:00 đến 22:00 hàng ngày (kể cả Lễ, Tết).
+            </div>
+          </div>
+        </div>
+
+        {/* Accepted Payment Methods Strip (Visa, Mastercard, JCB, Napas, VietQR, MoMo, Apple Pay) */}
+        <div className="py-6 border-b border-[#31302d] flex flex-col md:flex-row items-center justify-between gap-4">
+          <PaymentBadgesGroup theme="dark" showLabel={true} badgeSize="h-7" />
+          <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4 text-[11px] text-[#898789]">
+            <div className="flex items-center space-x-1.5">
+              <ShieldCheck className="w-4 h-4 text-[#fed8c9]" />
+              <span>Giao dịch mã hóa SSL 256-bit</span>
+            </div>
+            <span className="hidden sm:inline">•</span>
+            <div className="flex items-center space-x-1.5">
+              <HeartHandshake className="w-4 h-4 text-[#fed8c9]" />
+              <span>Bảo vệ quyền lợi & Đồng kiểm khi nhận</span>
             </div>
           </div>
         </div>

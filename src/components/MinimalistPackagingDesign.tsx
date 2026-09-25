@@ -1,21 +1,23 @@
 import React from 'react';
-import { Sparkles, Shield, Droplets, Check, ArrowRight } from 'lucide-react';
-import duoImg from '../assets/images/alps_cleanser_sunscreen_duo_1789998788535.jpg';
+import { Sparkles, Droplets, Check, ArrowRight, ShoppingBag } from 'lucide-react';
+import duoImg from '../assets/images/alps_toner_mask_duo_1790357381087.jpg';
 
 interface MinimalistPackagingDesignProps {
   onOpenCollection?: () => void;
+  onAddDuoToCart?: () => void;
   isMobileFrame?: boolean;
 }
 
 export const MinimalistPackagingDesign: React.FC<MinimalistPackagingDesignProps> = ({
   onOpenCollection,
+  onAddDuoToCart,
   isMobileFrame = false,
 }) => {
   const materialHighlights = [
-    'Nước Tẩy Trang ALPS: Công nghệ Micellar với nước khoáng sông băng, làm sạch sâu cặn trang điểm & bụi mịn PM2.5, 0% cồn dịu nhẹ',
-    'Kem Chống Nắng ALPS SPF 50+ PA++++: Màng lọc phổ rộng thế hệ mới, chống tia UVA/UVB và ánh sáng xanh, nâng tông trong suốt không nhờn rít',
-    'Thủy tinh đúc mờ 2 lớp & nắp kim loại champagne phay xước: Cản 99.8% tia cực tím, bảo toàn dược tính hoạt chất sinh học',
-    'Thiết kế tối giản thuần khiết: Chỉ in tên thương hiệu ALPS và công năng tinh gọn, giữ trọn thẩm mỹ Quiet Luxury',
+    'Nước Cân Bằng ALPS (Botanical Balancing Toner 100ml): Nước khoáng sông băng Alpine & khuynh diệp thanh khiết, cân bằng pH 5.5, làm dịu da nhạy cảm & se mịn lỗ chân lông',
+    'Mặt Nạ Thạch Sinh Học ALPS (Hydro-Lifting Sheet Mask - Hộp 5 miếng): Màng Bio-Cellulose dồi dào Collagen vi phân tử & Tảo tuyết đỏ Thụy Sĩ, cấp ẩm sâu gấp 10 lần & nâng cơ săn chắc tức thì',
+    'Thủy tinh đúc mờ 2 lớp & sachet màng nhôm bảo quản: Cản 99.8% tia UV, bảo toàn trọn vẹn hoạt tính sinh học tế bào gốc tuyết Thụy Sĩ',
+    'Thiết kế tối giản thuần khiết: Đường nét tinh gọn, nắp nhôm champagne phay xước sang trọng, giữ trọn thẩm mỹ Quiet Luxury',
   ];
 
   return (
@@ -32,15 +34,15 @@ export const MinimalistPackagingDesign: React.FC<MinimalistPackagingDesignProps>
         <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-14">
           <div className="inline-flex items-center space-x-2 bg-white/80 border border-[#e4ded5] px-3.5 py-1 rounded-full text-[11px] font-medium tracking-[0.2em] text-[#74584d] uppercase mb-3 shadow-2xs backdrop-blur-xs">
             <Sparkles className="w-3.5 h-3.5 text-[#8b5545]" />
-            <span>BỘ ĐÔI LÀM SẠCH & BẢO VỆ • ALPS</span>
+            <span>BỘ ĐÔI THIẾT YẾU • ALPS</span>
           </div>
 
           <h2 className="font-serif text-2xl sm:text-4xl font-normal tracking-tight text-[#1c1c19] leading-snug">
-            Nước Tẩy Trang & Kem Chống Nắng ALPS
+            Nước Cân Bằng & Mặt Nạ Sinh Học ALPS
           </h2>
 
           <p className="mt-3 text-xs sm:text-sm text-[#5f5d58] leading-relaxed font-light">
-            Sự kết hợp hoàn hảo giữa bước thanh lọc làm sạch sâu và lớp khiên bảo vệ quang phổ rộng SPF 50+. Thiết kế chai lọ thủy tinh mờ tuyết nắp champagne tối giản, thuần khiết và sang trọng.
+            Sự kết hợp hoàn hảo giữa bước cân bằng chuẩn pH 5.5 và mặt nạ thạch sinh học Bio-Cellulose Thụy Sĩ. Cấp ẩm đa tầng, phục hồi tức thì và nâng cơ săn chắc cho làn da căng mọng sương mai.
           </p>
         </div>
 
@@ -51,24 +53,24 @@ export const MinimalistPackagingDesign: React.FC<MinimalistPackagingDesignProps>
             <div className="relative rounded-2xl overflow-hidden bg-[#f4f0eb] border border-[#e8e1d6] aspect-4/3 sm:aspect-16/10 group shadow-xs">
               <img
                 src={duoImg}
-                alt="Bộ đôi Nước Tẩy Trang và Kem Chống Nắng ALPS"
+                alt="Bộ đôi Nước Cân Bằng Thảo Mộc và Mặt Nạ Sinh Học ALPS"
                 referrerPolicy="no-referrer"
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-103"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/45 via-transparent to-transparent opacity-60" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/15 to-transparent opacity-75" />
 
               <div className="absolute bottom-4 left-4 right-4 flex items-end justify-between text-white">
                 <div>
                   <span className="text-[10px] tracking-widest uppercase font-semibold text-amber-200/90 block">
-                    ALPS CLEANSING WATER & DAILY SUN SHIELD
+                    ALPS BOTANICAL TONER & HYDRO-LIFTING MASK
                   </span>
                   <h3 className="font-serif text-lg sm:text-xl font-normal mt-0.5">
-                    Bộ Đôi Tẩy Trang & Chống Nắng ALPS
+                    Bộ Đôi Thiết Yếu: Toner & Mặt Nạ ALPS
                   </h3>
                 </div>
                 <div className="hidden sm:inline-flex items-center space-x-1.5 bg-black/40 backdrop-blur-md px-3 py-1 rounded-full text-[11px] border border-white/20">
-                  <Shield className="w-3 h-3 text-amber-300" />
-                  <span>SPF 50+ & Micellar Pure</span>
+                  <Droplets className="w-3 h-3 text-amber-300" />
+                  <span>pH 5.5 & Bio-Cellulose Collagen</span>
                 </div>
               </div>
             </div>
@@ -78,13 +80,13 @@ export const MinimalistPackagingDesign: React.FC<MinimalistPackagingDesignProps>
           <div className="lg:col-span-5 space-y-6">
             <div>
               <span className="text-[10px] uppercase tracking-[0.25em] text-[#8b5545] font-semibold block mb-1">
-                TRIẾT LÝ BẢO VỆ & LÀM SẠCH THỤY SĨ
+                TRIẾT LÝ CẤP ẨM & PHỤC HỒI THỤY SĨ
               </span>
               <h3 className="font-serif text-xl sm:text-2xl font-normal text-[#1c1c19] tracking-tight">
                 Bộ Đôi Chăm Sóc Thiết Yếu ALPS
               </h3>
               <p className="text-xs sm:text-sm text-[#5f5d58] mt-2.5 leading-relaxed font-light">
-                Hai bước cốt lõi tạo nên làn da khỏe mạnh: Nước tẩy trang làm dịu loại bỏ 99% bụi mịn và lớp makeup cứng đầu; cùng Kem chống nắng kết cấu sữa mỏng nhẹ bảo vệ tế bào da trước tia bức xạ mặt trời. Bao bì tối giản tinh tế, không in logo thừa trên sản phẩm.
+                Hai bước cốt lõi đánh thức sức sống làn da: Nước cân bằng thảo mộc làm dịu, cân bằng pH 5.5 ngay sau bước rửa mặt; cùng Mặt nạ thạch sinh học Bio-Cellulose dồi dào Collagen vi phân tử ôm khít khuôn mặt, nâng cơ và phục hồi màng ẩm sinh học sau 20 phút.
               </p>
             </div>
 
@@ -108,31 +110,41 @@ export const MinimalistPackagingDesign: React.FC<MinimalistPackagingDesignProps>
             {/* Three Micro Metrics */}
             <div className="grid grid-cols-3 gap-2.5 pt-2 border-t border-[#ebe5dc]">
               <div className="p-2.5 bg-[#fbf9f6] rounded-xl border border-[#efe7dd] text-center">
-                <div className="font-serif text-sm font-semibold text-[#1c1c19]">SPF 50+</div>
-                <div className="text-[10px] text-[#77746f] mt-0.5 leading-tight">PA++++ Toàn diện</div>
+                <div className="font-serif text-sm font-semibold text-[#1c1c19]">pH 5.5</div>
+                <div className="text-[10px] text-[#77746f] mt-0.5 leading-tight">Cân bằng lý tưởng</div>
               </div>
               <div className="p-2.5 bg-[#fbf9f6] rounded-xl border border-[#efe7dd] text-center">
-                <div className="font-serif text-sm font-semibold text-[#1c1c19]">0% Cồn</div>
-                <div className="text-[10px] text-[#77746f] mt-0.5 leading-tight">Không cay mắt</div>
+                <div className="font-serif text-sm font-semibold text-[#1c1c19]">10x Ẩm</div>
+                <div className="text-[10px] text-[#77746f] mt-0.5 leading-tight">Bio-Cellulose</div>
               </div>
               <div className="p-2.5 bg-[#fbf9f6] rounded-xl border border-[#efe7dd] text-center">
-                <div className="font-serif text-sm font-semibold text-[#1c1c19]">99.8%</div>
-                <div className="text-[10px] text-[#77746f] mt-0.5 leading-tight">Kháng tia UV lọ</div>
+                <div className="font-serif text-sm font-semibold text-[#1c1c19]">-4.5°C</div>
+                <div className="text-[10px] text-[#77746f] mt-0.5 leading-tight">Hạ nhiệt dịu mát</div>
               </div>
             </div>
 
-            {/* Action */}
-            {onOpenCollection && (
-              <div className="pt-2">
+            {/* Actions */}
+            <div className="pt-2 flex flex-col sm:flex-row gap-2.5">
+              {onAddDuoToCart && (
+                <button
+                  onClick={onAddDuoToCart}
+                  className="w-full sm:w-auto inline-flex items-center justify-center space-x-2 bg-[#74584d] hover:bg-[#5e453c] text-white px-5 py-3 rounded-full text-xs font-medium tracking-wider uppercase transition-all shadow-xs"
+                >
+                  <ShoppingBag className="w-3.5 h-3.5" />
+                  <span>Mua Bộ Đôi (Toner + Mask)</span>
+                </button>
+              )}
+
+              {onOpenCollection && (
                 <button
                   onClick={onOpenCollection}
-                  className="w-full sm:w-auto inline-flex items-center justify-center space-x-2 bg-[#1c1c19] text-[#f7f5f0] hover:bg-[#323235] px-6 py-3 rounded-full text-xs font-medium tracking-wider uppercase transition-all shadow-xs"
+                  className="w-full sm:w-auto inline-flex items-center justify-center space-x-2 bg-[#1c1c19] text-[#f7f5f0] hover:bg-[#323235] px-5 py-3 rounded-full text-xs font-medium tracking-wider uppercase transition-all shadow-xs"
                 >
-                  <span>Khám Phá Toàn Bộ Sản Phẩm ALPS</span>
+                  <span>Khám Phá Sản Phẩm ALPS</span>
                   <ArrowRight className="w-3.5 h-3.5" />
                 </button>
-              </div>
-            )}
+              )}
+            </div>
           </div>
         </div>
       </div>

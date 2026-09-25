@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { X, ShoppingBag, Trash2, ArrowRight, ShieldCheck, Sparkles, Truck, Tag } from 'lucide-react';
 import { CartItem, UserProfile } from '../types';
 import { AlpsIcon } from './AlpsLogo';
+import { VisaBadge, VisaSecureBadge, MastercardBadge, NapasBadge, VietQRBadge } from './PaymentBadges';
 
 interface CartDrawerProps {
   isOpen: boolean;
@@ -303,11 +304,23 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                   onClose();
                   onOpenCheckout();
                 }}
-                className="w-full py-3.5 px-6 rounded-full bg-[#1c1c19] hover:bg-black text-white text-xs font-semibold tracking-wider transition-all duration-200 active:scale-98 shadow-md flex items-center justify-center space-x-2"
+                className="w-full py-3.5 px-6 rounded-full bg-[#1c1c19] hover:bg-black text-white text-xs font-semibold tracking-wider transition-all duration-200 active:scale-98 shadow-md flex items-center justify-center space-x-2 cursor-pointer"
               >
                 <span>TIẾN HÀNH THANH TOÁN</span>
                 <ArrowRight className="w-4 h-4 text-[#fed8c9]" />
               </button>
+
+              {/* Payment badges guarantee */}
+              <div className="pt-2 flex flex-col items-center justify-center space-y-1.5 border-t border-[#202022]/6">
+                <span className="text-[10px] text-[#77767b]">Chấp nhận thanh toán bảo mật:</span>
+                <div className="flex items-center space-x-1.5 flex-wrap justify-center">
+                  <VisaBadge className="h-5" />
+                  <VisaSecureBadge className="h-5" />
+                  <MastercardBadge className="h-5" />
+                  <NapasBadge className="h-5" />
+                  <VietQRBadge className="h-5" />
+                </div>
+              </div>
             </div>
           )}
         </div>

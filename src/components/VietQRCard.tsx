@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import QRCode from 'qrcode';
 import { Copy, Check, Download, ShieldCheck, Sparkles, Building, RefreshCw, CheckCircle2, AlertCircle } from 'lucide-react';
+import { VisaBadge, MastercardBadge } from './PaymentBadges';
 
 interface VietQRCardProps {
   orderNumber: string;
@@ -31,7 +32,7 @@ export const VietQRCard: React.FC<VietQRCardProps> = ({
     accountNumber: '9999ALPS88',
     accountDisplayNumber: '9999 ALPS 88',
     accountName: 'ALPS',
-    branch: 'Chi nhánh Landmark 81 - TP.HCM',
+    branch: 'Chi nhánh Tân Phú - TP.HCM (30 D. Trịnh Đình Thảo)',
     amount: amount,
     memo: `ALPS ${orderNumber.replace(/[^a-zA-Z0-9]/g, '')}`,
   };
@@ -183,19 +184,19 @@ export const VietQRCard: React.FC<VietQRCardProps> = ({
           </div>
         </div>
 
-        {/* Bottom Brands: VietQR Pay, VietQR Global, napas 247 */}
+        {/* Bottom Brands: VietQR Pay, VietQR Global, napas 247 & Card badges */}
         <div className="relative z-10 pt-2 border-t border-[#202022]/6 flex items-center justify-between text-[10px] text-[#46464a] font-medium px-1">
           <div className="flex items-center space-x-0.5">
-            <span className="font-bold text-[#e02020]">VietQR</span>
-            <span className="text-[9px] text-[#77767b]">Pay</span>
-          </div>
-          <div className="flex items-center space-x-0.5">
-            <span className="font-bold text-[#0052cc]">VietQR</span>
-            <span className="text-[9px] text-[#77767b]">Global</span>
+            <span className="font-bold text-[#e02020]">Viet</span>
+            <span className="font-bold text-[#0052cc]">QR</span>
           </div>
           <div className="flex items-center space-x-0.5">
             <span className="font-bold text-[#002f87]">napas</span>
             <span className="font-bold text-[#107c41]">247</span>
+          </div>
+          <div className="flex items-center space-x-1">
+            <VisaBadge className="h-4.5 px-1 py-0.2" />
+            <MastercardBadge className="h-4.5 px-1 py-0.2" />
           </div>
         </div>
       </div>

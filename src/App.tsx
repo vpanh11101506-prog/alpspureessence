@@ -297,6 +297,35 @@ export default function App() {
     showToast('Đã thêm trọn bộ 5 sản phẩm vào giỏ hàng');
   };
 
+  const handleAddDuoToCart = () => {
+    const toner = PRODUCTS.find((p) => p.id === 'toner-botanical');
+    const mask = PRODUCTS.find((p) => p.id === 'mask-hydro-lifting');
+    if (toner && mask) {
+      setCart((prev) => {
+        let updated = [...prev];
+        const hasToner = updated.some((i) => i.product.id === toner.id);
+        if (hasToner) {
+          updated = updated.map((i) =>
+            i.product.id === toner.id ? { ...i, quantity: i.quantity + 1 } : i
+          );
+        } else {
+          updated.push({ product: toner, quantity: 1 });
+        }
+        const hasMask = updated.some((i) => i.product.id === mask.id);
+        if (hasMask) {
+          updated = updated.map((i) =>
+            i.product.id === mask.id ? { ...i, quantity: i.quantity + 1 } : i
+          );
+        } else {
+          updated.push({ product: mask, quantity: 1 });
+        }
+        return updated;
+      });
+      setIsCartOpen(true);
+      showToast('Đã thêm Bộ Đôi Thiết Yếu (Toner & Mặt Nạ) vào giỏ hàng');
+    }
+  };
+
   const handleOpenCheckoutFromCart = () => {
     if (cart.length === 0) {
       showToast('Giỏ hàng của bạn đang trống');
@@ -498,6 +527,7 @@ export default function App() {
 
               <MinimalistPackagingDesign
                 onOpenCollection={handleScrollToCatalog}
+                onAddDuoToCart={handleAddDuoToCart}
                 isMobileFrame={true}
               />
 
@@ -570,6 +600,7 @@ export default function App() {
 
             <MinimalistPackagingDesign
               onOpenCollection={handleScrollToCatalog}
+              onAddDuoToCart={handleAddDuoToCart}
               isMobileFrame={false}
             />
 
