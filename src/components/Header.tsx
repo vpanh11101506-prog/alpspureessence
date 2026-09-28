@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Search, Bell, ShoppingBag, Smartphone, Monitor, Sparkles, X, User, Headphones } from 'lucide-react';
+import { Search, Bell, ShoppingBag, Smartphone, Monitor, Sparkles, X, User, Headphones, Type } from 'lucide-react';
 import { AlpsLogo } from './AlpsLogo';
 import { ViewMode, ActiveTab, UserProfile } from '../types';
 
@@ -17,6 +17,8 @@ interface HeaderProps {
   onOpenAccount?: () => void;
   onOpenSupport?: () => void;
   onOpenPolicies?: (tab?: 'returns' | 'privacy' | 'shipping') => void;
+  onOpenFontSwitcher?: () => void;
+  onOpenSkinQuiz?: () => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -33,6 +35,8 @@ export const Header: React.FC<HeaderProps> = ({
   onOpenAccount,
   onOpenSupport,
   onOpenPolicies,
+  onOpenFontSwitcher,
+  onOpenSkinQuiz,
 }) => {
   const [showSearchInput, setShowSearchInput] = useState(false);
   const [showNotification, setShowNotification] = useState(false);
@@ -138,11 +142,23 @@ export const Header: React.FC<HeaderProps> = ({
               >
                 DANH MỤC ĐÃ MUA
               </button>
+              {onOpenSkinQuiz && (
+                <button
+                  onClick={onOpenSkinQuiz}
+                  className="transition-all hover:scale-105 active:scale-95 px-3 py-1 rounded-full bg-[#f4ece3] hover:bg-[#ebdccf] text-[#74584d] font-semibold flex items-center space-x-1.5 border border-[#fed8c9]/80 shadow-2xs cursor-pointer"
+                >
+                  <Sparkles className="w-3.5 h-3.5 text-[#74584d]" />
+                  <span>SOI DA AI</span>
+                  <span className="text-[9px] bg-[#74584d] text-white px-1.5 py-0.2 rounded-full font-bold uppercase">
+                    Quiz
+                  </span>
+                </button>
+              )}
               {onOpenSupport && (
                 <button
                   id="nav-support-btn"
                   onClick={onOpenSupport}
-                  className="transition-colors text-[#74584d] hover:text-[#1c1c19] font-semibold flex items-center space-x-1"
+                  className="transition-colors text-[#74584d] hover:text-[#1c1c19] font-semibold flex items-center space-x-1 cursor-pointer"
                 >
                   <Headphones className="w-3.5 h-3.5" />
                   <span>CHĂM SÓC KHÁCH HÀNG</span>
@@ -167,8 +183,8 @@ export const Header: React.FC<HeaderProps> = ({
           className="cursor-pointer text-center select-none group py-1"
         >
           <AlpsLogo
-            iconColor="#74584d"
-            textColor="text-[#1c1c19] group-hover:text-[#74584d] transition-colors"
+            iconColor="#1c211b"
+            textColor="text-[#1c1c19] group-hover:text-[#32362f] transition-colors"
             subtitle="PURE ESSENCE"
           />
         </div>
@@ -203,6 +219,19 @@ export const Header: React.FC<HeaderProps> = ({
                 <span className="text-[11px] font-medium hidden md:inline">Điện thoại</span>
               </button>
             </div>
+          )}
+
+          {/* Brand Typography Preset Switcher */}
+          {onOpenFontSwitcher && (
+            <button
+              id="header-font-btn"
+              onClick={onOpenFontSwitcher}
+              className="p-1.5 text-[#1c1c19] hover:bg-[#f0ede9] rounded-full transition-colors flex items-center space-x-1"
+              title="Tùy chọn phong cách font chữ (Swiss Quiet Luxury / Parisian / Modern)"
+            >
+              <Type className="w-4 h-4 text-[#74584d]" />
+              <span className="text-[11px] font-medium hidden lg:inline text-[#74584d]">Font</span>
+            </button>
           )}
 
           {/* Customer Support Button */}

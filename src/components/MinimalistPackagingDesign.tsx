@@ -1,6 +1,6 @@
 import React from 'react';
 import { Sparkles, Droplets, Check, ArrowRight, ShoppingBag } from 'lucide-react';
-import duoImg from '../assets/images/alps_toner_mask_duo_1790357381087.jpg';
+import duoImg from '../assets/images/alps_gold_text_duo_1790440303731.jpg';
 
 interface MinimalistPackagingDesignProps {
   onOpenCollection?: () => void;
@@ -15,9 +15,9 @@ export const MinimalistPackagingDesign: React.FC<MinimalistPackagingDesignProps>
 }) => {
   const materialHighlights = [
     'Nước Cân Bằng ALPS (Botanical Balancing Toner 100ml): Nước khoáng sông băng Alpine & khuynh diệp thanh khiết, cân bằng pH 5.5, làm dịu da nhạy cảm & se mịn lỗ chân lông',
-    'Mặt Nạ Thạch Sinh Học ALPS (Hydro-Lifting Sheet Mask - Hộp 5 miếng): Màng Bio-Cellulose dồi dào Collagen vi phân tử & Tảo tuyết đỏ Thụy Sĩ, cấp ẩm sâu gấp 10 lần & nâng cơ săn chắc tức thì',
+    'Mặt Nạ Thạch Sinh Học ALPS (Hydro-Lifting Sheet Mask - Hộp 5 miếng): Màng Bio-Cellulose dồi dào Tremella Mushroom + Hyaluronic Acid & Tảo tuyết đỏ Thụy Sĩ, cấp ẩm sâu gấp 10 lần & nâng cơ săn chắc tức thì',
     'Thủy tinh đúc mờ 2 lớp & sachet màng nhôm bảo quản: Cản 99.8% tia UV, bảo toàn trọn vẹn hoạt tính sinh học tế bào gốc tuyết Thụy Sĩ',
-    'Thiết kế tối giản thuần khiết: Đường nét tinh gọn, nắp nhôm champagne phay xước sang trọng, giữ trọn thẩm mỹ Quiet Luxury',
+    'Thiết kế tối giản thuần khiết: Tên thương hiệu ALPS và thông tin sản phẩm được dập nhũ vàng champagne ánh kim (Gold Foil) sang trọng trên thân chai thủy tinh mờ và bao bì, giữ trọn thẩm mỹ Quiet Luxury',
   ];
 
   return (
@@ -61,16 +61,16 @@ export const MinimalistPackagingDesign: React.FC<MinimalistPackagingDesignProps>
 
               <div className="absolute bottom-4 left-4 right-4 flex items-end justify-between text-white">
                 <div>
-                  <span className="text-[10px] tracking-widest uppercase font-semibold text-amber-200/90 block">
+                  <span className="text-[10px] tracking-widest uppercase font-semibold text-amber-300 block">
                     ALPS BOTANICAL TONER & HYDRO-LIFTING MASK
                   </span>
-                  <h3 className="font-serif text-lg sm:text-xl font-normal mt-0.5">
-                    Bộ Đôi Thiết Yếu: Toner & Mặt Nạ ALPS
+                  <h3 className="font-serif text-lg sm:text-xl font-normal mt-0.5 text-amber-100">
+                    Bộ Đôi Thiết Yếu: <span className="text-amber-300 font-medium">Toner & Mặt Nạ ALPS</span>
                   </h3>
                 </div>
-                <div className="hidden sm:inline-flex items-center space-x-1.5 bg-black/40 backdrop-blur-md px-3 py-1 rounded-full text-[11px] border border-white/20">
+                <div className="hidden sm:inline-flex items-center space-x-1.5 bg-black/50 backdrop-blur-md px-3 py-1 rounded-full text-[11px] border border-amber-300/30 text-amber-200">
                   <Droplets className="w-3 h-3 text-amber-300" />
-                  <span>pH 5.5 & Bio-Cellulose Collagen</span>
+                  <span>pH 5.5 & Tremella Mushroom + Hyaluronic Acid</span>
                 </div>
               </div>
             </div>
@@ -86,7 +86,7 @@ export const MinimalistPackagingDesign: React.FC<MinimalistPackagingDesignProps>
                 Bộ Đôi Chăm Sóc Thiết Yếu ALPS
               </h3>
               <p className="text-xs sm:text-sm text-[#5f5d58] mt-2.5 leading-relaxed font-light">
-                Hai bước cốt lõi đánh thức sức sống làn da: Nước cân bằng thảo mộc làm dịu, cân bằng pH 5.5 ngay sau bước rửa mặt; cùng Mặt nạ thạch sinh học Bio-Cellulose dồi dào Collagen vi phân tử ôm khít khuôn mặt, nâng cơ và phục hồi màng ẩm sinh học sau 20 phút.
+                Hai bước cốt lõi đánh thức sức sống làn da: Nước cân bằng thảo mộc làm dịu, cân bằng pH 5.5 ngay sau bước rửa mặt; cùng Mặt nạ thạch sinh học Bio-Cellulose dồi dào Tremella Mushroom + Hyaluronic Acid ôm khít khuôn mặt, nâng cơ và phục hồi màng ẩm sinh học sau 20 phút.
               </p>
             </div>
 

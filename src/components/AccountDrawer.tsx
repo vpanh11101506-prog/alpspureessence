@@ -650,7 +650,7 @@ export const AccountDrawer: React.FC<AccountDrawerProps> = ({
                     Chưa có đơn hàng nào
                   </h4>
                   <p className="text-xs text-[#77767b] max-w-xs mx-auto">
-                    Khám phá ngay bộ sưu tập chăm sóc da thuần chay chuẩn Thụy Sĩ của ALPS.
+                    Khám phá ngay bộ sưu tập chăm sóc da cao cấp của ALPS.
                   </p>
                   <button
                     onClick={onClose}
@@ -1101,7 +1101,7 @@ export const AccountDrawer: React.FC<AccountDrawerProps> = ({
                     <span className="text-[10px] text-[#8a9a86] font-medium">1900 8899</span>
                   </div>
                   <p className="text-[11px] text-[#77767b] leading-relaxed">
-                    Đội ngũ chuyên viên tư vấn da liễu Thụy Sĩ luôn sẵn sàng hỗ trợ phác đồ sử dụng hoặc chính sách đổi trả hàng 30 ngày.
+                    Đội ngũ chuyên viên tư vấn da Alps luôn sẵn sàng hỗ trợ phác đồ sử dụng hoặc chính sách đổi trả hàng 30 ngày.
                   </p>
                   <button
                     onClick={() => {

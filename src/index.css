@@ -16,12 +16,63 @@
   --color-sage-light: #d7e7d1;
 }
 
+:root {
+  /* Font chuẩn chính thức của alps.id.vn: Noto Serif & Plus Jakarta Sans */
+  --font-serif-custom: "Noto Serif", Georgia, serif;
+  --font-sans-custom: "Plus Jakarta Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+/* Preset Mặc Định: Chuẩn alps.id.vn */
+[data-font="alps_id_vn"],
+[data-font="default"],
+:root:not([data-font]) {
+  --font-serif-custom: "Noto Serif", Georgia, serif;
+  --font-sans-custom: "Plus Jakarta Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+/* Preset Swiss Quiet Luxury (Cormorant Garamond) */
+[data-font="cormorant"] {
+  --font-serif-custom: "Cormorant Garamond", Garamond, "Times New Roman", serif;
+  --font-sans-custom: "Plus Jakarta Sans", sans-serif;
+}
+
+/* Preset Parisian (Playfair Display) */
+[data-font="playfair"] {
+  --font-serif-custom: "Playfair Display", Georgia, "Times New Roman", serif;
+  --font-sans-custom: "Plus Jakarta Sans", sans-serif;
+}
+
+/* Preset Modern */
+[data-font="modern"] {
+  --font-serif-custom: "Plus Jakarta Sans", sans-serif;
+  --font-sans-custom: "Plus Jakarta Sans", sans-serif;
+}
+
 @layer base {
   html {
     scroll-behavior: smooth;
-    font-family: var(--font-sans);
+    font-family: var(--font-sans-custom, "Plus Jakarta Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif);
     background-color: #fcf9f4;
     color: #1c1c19;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Font serif chuẩn alps.id.vn cho tất cả tiêu đề, đề mục và giá tiền */
+  h1, h2, h3, h4, h5, h6, .font-serif {
+    font-family: var(--font-serif-custom, "Noto Serif", Georgia, serif) !important;
+    letter-spacing: -0.01em;
+  }
+
+  /* Font sans cho body text, nút bấm, tags */
+  .font-sans {
+    font-family: var(--font-sans-custom, "Plus Jakarta Sans", system-ui, -apple-system, sans-serif);
+  }
+
+  /* Numbers in tables and prices */
+  .tabular-nums {
+    font-variant-numeric: tabular-nums;
   }
 }
 
@@ -38,5 +89,5 @@
   border-radius: 9999px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #c7c6ca;
+  background: #8a9a86;
 }

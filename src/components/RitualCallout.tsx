@@ -26,7 +26,7 @@ export const RitualCallout: React.FC<RitualCalloutProps> = ({ onOpenRitual, isMo
               Nghi Thức Dưỡng Sáng Tự Nhiên
             </h3>
             <p className="text-[11px] sm:text-xs text-[#77767b] font-light mt-0.5">
-              100% Thuần Chay • Chuẩn Da Liễu Thụy Sĩ
+              Công Thức Tinh Khiết • An Toàn Lành Tính
             </p>
           </div>
         </div>

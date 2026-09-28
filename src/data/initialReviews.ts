@@ -144,7 +144,7 @@ export const INITIAL_REVIEWS: ProductReview[] = [
       'Chất kem đặc nhưng khi áp lên da lập tức tan ra như tuyết ấm, không hề bí bách hay nặng mặt. Sáng ngủ dậy rửa mặt da mướt rượt đàn hồi rõ rệt. Nếp nhăn khóe mắt và khóe miệng mờ hẳn.',
     helpfulCount: 35,
     responseFromBrand:
-      'Alps trân trọng cảm ơn chị Khánh Vân! Phức hợp Ceramide 3 tầng và tế bào gốc sông băng giúp tái tạo mạng lưới collagen dưới da ban đêm tối ưu nhất ạ.',
+      'Alps trân trọng cảm ơn chị Khánh Vân! Phức hợp Ceramide 3 tầng và tế bào gốc sông băng giúp tái tạo mạng lưới Tremella Mushroom + Hyaluronic Acid dưới da ban đêm tối ưu nhất ạ.',
   },
   {
     id: 'rev-cr-2',

@@ -19,7 +19,9 @@ import { SupportFloatingButton } from './components/SupportFloatingButton';
 import { CheckoutModal } from './components/CheckoutModal';
 import { PoliciesModal, PolicyTabType } from './components/PoliciesModal';
 import { Footer } from './components/Footer';
-import { Sparkles } from 'lucide-react';
+import { FontSwitcherModal } from './components/FontSwitcherModal';
+import { SkinQuizModal } from './components/SkinQuizModal';
+import { Sparkles, Type } from 'lucide-react';
 
 export default function App() {
   // Device view mode: 'desktop' | 'mobile' | 'responsive'
@@ -127,6 +129,9 @@ export default function App() {
   const [checkoutItems, setCheckoutItems] = useState<CartItem[]>([]);
   const [isPoliciesOpen, setIsPoliciesOpen] = useState(false);
   const [policiesInitialTab, setPoliciesInitialTab] = useState<PolicyTabType>('returns');
+  const [isFontSwitcherOpen, setIsFontSwitcherOpen] = useState(false);
+  const [isSkinQuizOpen, setIsSkinQuizOpen] = useState(false);
+  const [supportInitialPrompt, setSupportInitialPrompt] = useState<string | undefined>(undefined);
   const [isCheckoutSuccessOpen, setIsCheckoutSuccessOpen] = useState(false);
   const [latestOrderNumber, setLatestOrderNumber] = useState('ALPS-89421');
   const [latestRecipient, setLatestRecipient] = useState<{
@@ -149,6 +154,11 @@ export default function App() {
     setTimeout(() => {
       setToastMessage(null);
     }, 2800);
+  };
+
+  const handleOpenSupportWithPrompt = (promptText: string) => {
+    setSupportInitialPrompt(promptText);
+    setIsSupportOpen(true);
   };
 
   // User Actions: Login, Logout, Update Profile
@@ -331,13 +341,6 @@ export default function App() {
       showToast('Giỏ hàng của bạn đang trống');
       return;
     }
-    if (!user || !user.isLoggedIn) {
-      setIsCartOpen(false);
-      setAccountInitialTab('profile');
-      setIsAccountOpen(true);
-      showToast('Quý khách vui lòng đăng nhập tài khoản để tiến hành thanh toán');
-      return;
-    }
     setCheckoutItems(cart);
     setIsCartOpen(false);
     setIsCheckoutOpen(true);
@@ -346,13 +349,6 @@ export default function App() {
   // BUY NOW Action: Direct Checkout
   const handleBuyNow = (product: Product, quantity = 1, e?: React.MouseEvent) => {
     if (e) e.stopPropagation();
-    if (!user || !user.isLoggedIn) {
-      setPendingPurchaseAction({ type: 'buy_now', product, quantity });
-      setAccountInitialTab('profile');
-      setIsAccountOpen(true);
-      showToast('Quý khách vui lòng đăng nhập tài khoản để tiến hành mua hàng');
-      return;
-    }
     setCheckoutItems([{ product, quantity }]);
     setIsCheckoutOpen(true);
     showToast(`Chuyển đến thanh toán: ${product.name}`);
@@ -360,13 +356,6 @@ export default function App() {
 
   // BUY FULL SET RITUAL (5 STEPS)
   const handleBuyFullSet = () => {
-    if (!user || !user.isLoggedIn) {
-      setPendingPurchaseAction({ type: 'full_set' });
-      setAccountInitialTab('profile');
-      setIsAccountOpen(true);
-      showToast('Quý khách vui lòng đăng nhập tài khoản để đặt mua trọn bộ');
-      return;
-    }
     setCheckoutItems(PRODUCTS.map((product) => ({ product, quantity: 1 })));
     setIsCheckoutOpen(true);
     showToast('Chuyển sang thanh toán trọn bộ Nghi thức 5 bước Alps');
@@ -443,11 +432,22 @@ export default function App() {
         <div className="flex items-center space-x-2">
           <span className="w-2 h-2 rounded-full bg-[#8a9a86] animate-pulse" />
           <span className="font-medium tracking-wide">ALPS PURE ESSENCE • ZÜRICH</span>
-          <span className="text-[#fed8c9]/80 hidden sm:inline">| Dược Mỹ Phẩm Thuần Chay Thụy Sĩ</span>
+          <span className="text-[#fed8c9]/80 hidden sm:inline">| Dược Mỹ Phẩm Cao Cấp Alps</span>
         </div>
 
-        {/* View mode toggle */}
-        <div className="flex items-center space-x-1 bg-black/40 p-0.5 rounded-lg border border-white/10">
+        {/* View mode toggle & Font Switcher */}
+        <div className="flex items-center space-x-1.5">
+          <button
+            onClick={() => setIsFontSwitcherOpen(true)}
+            className="px-2.5 py-1 rounded-md transition-colors flex items-center space-x-1 text-[11px] bg-black/40 hover:bg-black/60 text-[#fed8c9] border border-white/10"
+            title="Tùy chọn phong cách font chữ (Swiss Quiet Luxury / Parisian / Modern)"
+          >
+            <Type className="w-3 h-3 text-[#fed8c9]" />
+            <span className="hidden sm:inline">Đổi font chữ</span>
+            <span className="sm:hidden">Font</span>
+          </button>
+
+          <div className="flex items-center space-x-1 bg-black/40 p-0.5 rounded-lg border border-white/10">
           <button
             onClick={() => setViewMode('desktop')}
             className={`px-2.5 py-1 rounded-md transition-colors flex items-center space-x-1.5 text-[11px] ${
@@ -477,6 +477,7 @@ export default function App() {
           </button>
         </div>
       </div>
+    </div>
 
       {/* Main Layout Area */}
       {isMobileSimulation ? (
@@ -502,10 +503,13 @@ export default function App() {
                 onOpenAccount={handleOpenPurchasedCategory}
                 onOpenSupport={() => setIsSupportOpen(true)}
                 onOpenPolicies={handleOpenPolicies}
+                onOpenFontSwitcher={() => setIsFontSwitcherOpen(true)}
+                onOpenSkinQuiz={() => setIsSkinQuizOpen(true)}
               />
 
               <HeroBanner
                 onExploreClick={handleScrollToCatalog}
+                onOpenSkinQuiz={() => setIsSkinQuizOpen(true)}
                 isMobileFrame={true}
               />
 
@@ -537,12 +541,14 @@ export default function App() {
                 isMobileFrame={true}
                 onOpenSupport={() => setIsSupportOpen(true)}
                 onOpenPolicies={handleOpenPolicies}
+                onOpenFontSwitcher={() => setIsFontSwitcherOpen(true)}
               />
             </div>
 
             {/* Floating CSKH button inside simulated mobile frame */}
             <SupportFloatingButton
               onOpenSupport={() => setIsSupportOpen(true)}
+              onOpenSkinQuiz={() => setIsSkinQuizOpen(true)}
               isMobileFrame={true}
             />
 
@@ -574,11 +580,14 @@ export default function App() {
             onOpenAccount={handleOpenPurchasedCategory}
             onOpenSupport={() => setIsSupportOpen(true)}
             onOpenPolicies={handleOpenPolicies}
+            onOpenFontSwitcher={() => setIsFontSwitcherOpen(true)}
+            onOpenSkinQuiz={() => setIsSkinQuizOpen(true)}
           />
 
           <main className="flex-grow pb-16 sm:pb-0">
             <HeroBanner
               onExploreClick={handleScrollToCatalog}
+              onOpenSkinQuiz={() => setIsSkinQuizOpen(true)}
               isMobileFrame={false}
             />
 
@@ -611,11 +620,13 @@ export default function App() {
             isMobileFrame={false}
             onOpenSupport={() => setIsSupportOpen(true)}
             onOpenPolicies={handleOpenPolicies}
+            onOpenFontSwitcher={() => setIsFontSwitcherOpen(true)}
           />
 
           {/* Floating CSKH 24/7 button on desktop / tablet / mobile web */}
           <SupportFloatingButton
             onOpenSupport={() => setIsSupportOpen(true)}
+            onOpenSkinQuiz={() => setIsSkinQuizOpen(true)}
             isMobileFrame={false}
           />
 
@@ -719,7 +730,10 @@ export default function App() {
       {/* Customer Support Center Modal (CSKH 24/7 & AI) */}
       <CustomerSupportModal
         isOpen={isSupportOpen}
-        onClose={() => setIsSupportOpen(false)}
+        onClose={() => {
+          setIsSupportOpen(false);
+          setSupportInitialPrompt(undefined);
+        }}
         user={user}
         onShowToast={showToast}
         onOpenLogin={() => {
@@ -727,6 +741,27 @@ export default function App() {
           setAccountInitialTab('profile');
           setIsAccountOpen(true);
         }}
+        onOpenSkinQuiz={() => {
+          setIsSupportOpen(false);
+          setIsSkinQuizOpen(true);
+        }}
+        initialPrompt={supportInitialPrompt}
+      />
+
+      {/* Skin Diagnostic Quiz Modal (Soi Da & Phác Đồ Cá Nhân Hóa) */}
+      <SkinQuizModal
+        isOpen={isSkinQuizOpen}
+        onClose={() => setIsSkinQuizOpen(false)}
+        onOpenSupportWithPrompt={handleOpenSupportWithPrompt}
+        onAddToCart={(p, qty) => handleAddToCart(p, qty || 1)}
+        onShowToast={showToast}
+      />
+
+      {/* Brand Typography Preset Modal */}
+      <FontSwitcherModal
+        isOpen={isFontSwitcherOpen}
+        onClose={() => setIsFontSwitcherOpen(false)}
+        onShowToast={showToast}
       />
 
       {/* Floating Toast Notification */}

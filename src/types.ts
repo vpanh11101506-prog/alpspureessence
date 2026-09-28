@@ -1,3 +1,18 @@
+export interface DetailedUsageStep {
+  step: number;
+  title: string;
+  description: string;
+}
+
+export interface DetailedUsage {
+  timing: string;
+  amount: string;
+  suitableFor: string;
+  steps: DetailedUsageStep[];
+  expertTip: string;
+  precautions?: string;
+}
+
 export interface Product {
   id: string;
   name: string;
@@ -20,6 +35,7 @@ export interface Product {
   keyIngredients: string[];
   benefits: string[];
   usage: string;
+  detailedUsage?: DetailedUsage;
   routineStepNumber: number;
   routineStepTitle: string;
   inStock: boolean;

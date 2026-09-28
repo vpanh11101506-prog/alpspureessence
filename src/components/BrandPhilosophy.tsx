@@ -63,11 +63,11 @@ export const BrandPhilosophy: React.FC<BrandPhilosophyProps> = ({ isMobileFrame 
         <div className="mt-8 flex flex-wrap items-center justify-center gap-3 sm:gap-6 text-[11px] text-[#77767b]">
           <span className="flex items-center space-x-1.5 bg-white/60 px-3 py-1 rounded-full border border-[#ebe8e3]">
             <ShieldCheck className="w-3.5 h-3.5 text-[#8a9a86]" />
-            <span>Chuẩn Da Liễu Thụy Sĩ</span>
+            <span>Chuẩn Khoa Học Làn Da</span>
           </span>
           <span className="flex items-center space-x-1.5 bg-white/60 px-3 py-1 rounded-full border border-[#ebe8e3]">
             <Leaf className="w-3.5 h-3.5 text-[#8a9a86]" />
-            <span>100% Thuần Chay</span>
+            <span>100% Lành Tính</span>
           </span>
           <span className="flex items-center space-x-1.5 bg-white/60 px-3 py-1 rounded-full border border-[#ebe8e3]">
             <Sparkles className="w-3.5 h-3.5 text-[#74584d]" />

@@ -11,6 +11,7 @@ import { Product } from '../types';
 interface HeroBannerProps {
   onExploreClick: () => void;
   onSelectProduct?: (product: Product) => void;
+  onOpenSkinQuiz?: () => void;
   isMobileFrame?: boolean;
 }
 
@@ -30,6 +31,7 @@ interface BannerSlide {
 export const HeroBanner: React.FC<HeroBannerProps> = ({
   onExploreClick,
   onSelectProduct,
+  onOpenSkinQuiz,
   isMobileFrame = false,
 }) => {
   const slides: BannerSlide[] = [
@@ -85,7 +87,7 @@ export const HeroBanner: React.FC<HeroBannerProps> = ({
       badge: 'NÂNG CƠ SPA TẠI GIA',
       title: 'Alps Hydro-Lifting Sheet Mask',
       highlight: 'Màng thạch dừa & Tảo tuyết đỏ Thụy Sĩ',
-      subtitle: 'Collagen vi phân tử hạ nhiệt tức thì -4.5°C, ôm khít gương mặt nâng cơ săn chắc.',
+      subtitle: 'Tremella Mushroom + Hyaluronic Acid hạ nhiệt tức thì -4.5°C, ôm khít gương mặt nâng cơ săn chắc.',
       image: hydroMaskImg,
       fallbackImage: '/facemask.jpg',
       productId: 'mask-hydro-lifting',
@@ -215,19 +217,29 @@ export const HeroBanner: React.FC<HeroBannerProps> = ({
 
             {/* Bottom Action Bar */}
             <div className="mt-3.5 sm:mt-5 flex flex-wrap items-center justify-between gap-3">
-              <div className="flex items-center space-x-3">
+              <div className="flex items-center space-x-2.5 sm:space-x-3">
                 <button
                   id="hero-explore-btn"
                   onClick={() => handleSlideClick(slide)}
-                  className="group inline-flex items-center space-x-2 bg-white text-[#1c1c19] hover:bg-[#fcf9f4] px-4 sm:px-6 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-semibold tracking-wider transition-all transform active:scale-98 shadow-md"
+                  className="group inline-flex items-center space-x-2 bg-white text-[#1c1c19] hover:bg-[#fcf9f4] px-4 sm:px-6 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-semibold tracking-wider transition-all transform active:scale-98 shadow-md cursor-pointer"
                 >
                   <span>{slide.buttonText}</span>
                   <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1 text-[#74584d]" />
                 </button>
 
-                <div className="hidden md:flex items-center space-x-1.5 text-xs text-white/70">
+                {onOpenSkinQuiz && (
+                  <button
+                    onClick={onOpenSkinQuiz}
+                    className="inline-flex items-center space-x-1.5 bg-black/40 hover:bg-black/60 text-white backdrop-blur-xs border border-white/40 px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-full text-xs font-semibold tracking-wider transition-all transform active:scale-98 cursor-pointer shadow-xs"
+                  >
+                    <Sparkles className="w-3.5 h-3.5 text-[#fed8c9]" />
+                    <span>SOI DA AI (1 PHÚT)</span>
+                  </button>
+                )}
+
+                <div className="hidden lg:flex items-center space-x-1.5 text-xs text-white/70">
                   <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
-                  <span>Chuẩn Dược Mỹ Phẩm Thụy Sĩ</span>
+                  <span>Dược Mỹ Phẩm Cao Cấp Alps</span>
                 </div>
               </div>
 

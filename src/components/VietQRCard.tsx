@@ -262,9 +262,9 @@ export const VietQRCard: React.FC<VietQRCardProps> = ({
               )}
             </button>
 
-            <div className="flex items-center justify-center space-x-1.5 text-[10px] text-[#ba1a1a]">
-              <AlertCircle className="w-3.5 h-3.5 shrink-0" />
-              <span>Nút xác nhận đặt hàng chỉ mở khóa khi nhận được tiền</span>
+            <div className="flex items-center justify-center space-x-1.5 text-[10px] text-[#5f5d58]">
+              <Check className="w-3.5 h-3.5 shrink-0 text-emerald-600" />
+              <span>Sau khi quét mã, quý khách có thể bấm nút &quot;Xác nhận đặt hàng ngay&quot; bên dưới</span>
             </div>
           </div>
         )}

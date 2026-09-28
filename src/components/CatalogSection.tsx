@@ -73,7 +73,7 @@ export const CatalogSection: React.FC<CatalogSectionProps> = ({
               <option value="featured">Nổi bật nhất</option>
               <option value="price-asc">Giá: Thấp đến Cao</option>
               <option value="price-desc">Giá: Cao đến Thấp</option>
-              <option value="rating">Đánh giá cao nhất</option>
+              <option value="rating">Bán chạy nhất</option>
             </select>
           </div>
         </div>

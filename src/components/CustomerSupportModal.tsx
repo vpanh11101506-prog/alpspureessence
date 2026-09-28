@@ -25,6 +25,8 @@ interface CustomerSupportModalProps {
   user: UserProfile | null;
   onShowToast: (msg: string) => void;
   onOpenLogin?: () => void;
+  onOpenSkinQuiz?: () => void;
+  initialPrompt?: string;
   initialTab?: 'ai_chat' | 'contact' | 'ticket' | 'faq';
 }
 
@@ -34,6 +36,8 @@ export const CustomerSupportModal: React.FC<CustomerSupportModalProps> = ({
   user,
   onShowToast,
   onOpenLogin,
+  onOpenSkinQuiz,
+  initialPrompt,
   initialTab = 'ai_chat',
 }) => {
   const [activeTab, setActiveTab] = useState<'ai_chat' | 'contact' | 'ticket' | 'faq'>(initialTab);
@@ -89,12 +93,12 @@ export const CustomerSupportModal: React.FC<CustomerSupportModalProps> = ({
     {
       question: 'Sản phẩm Alps có an toàn cho phụ nữ mang thai và da nhạy cảm?',
       answer:
-        'Tất cả sản phẩm Alps đều đạt tiêu chuẩn Thuần Chay Châu Âu (Vegan Certified) và được kiểm định da liễu nghiêm ngặt tại Zurich, Thụy Sĩ. 100% không cồn khô, không paraben, không hương liệu tổng hợp, đặc biệt an toàn cho phụ nữ mang thai, mẹ bỉm sữa và làn da nhạy cảm nhất.',
+        'Tất cả sản phẩm Alps đều đạt tiêu chuẩn kiểm định an toàn nghiêm ngặt. 100% không cồn khô, không paraben, không hương liệu tổng hợp, đặc biệt an toàn cho phụ nữ mang thai, mẹ bỉm sữa và làn da nhạy cảm nhất.',
     },
     {
-      question: 'Làm thế nào để được chuyên gia da liễu Thụy Sĩ lên phác đồ dưỡng da 1:1?',
+      question: 'Làm thế nào để được chuyên gia Alps lên phác đồ dưỡng da 1:1?',
       answer:
-        'Quý khách có thể gửi yêu cầu trong tab "Gửi Yêu Cầu Hỗ Trợ" hoặc nhắn tin trực tiếp qua Facebook Messenger của Alps. Chuyên viên sẽ phân tích ảnh chụp nền da và thiết lập phác đồ cá nhân hóa hoàn toàn miễn phí.',
+        'Quý khách có thể gửi yêu cầu trong tab "Gửi Yêu Cầu Hỗ Trợ" hoặc nhắn tin trực tiếp qua hệ thống Chat AI của Alps. Chuyên viên sẽ phân tích ảnh chụp nền da và thiết lập phác đồ cá nhân hóa hoàn toàn miễn phí.',
     },
   ];
 
@@ -120,7 +124,7 @@ export const CustomerSupportModal: React.FC<CustomerSupportModalProps> = ({
           </div>
 
           <h3 className="font-serif text-xl sm:text-2xl text-white font-normal">
-            Dịch Vụ Hỗ Trợ Chuẩn Da Liễu Thụy Sĩ
+            Dịch Vụ Hỗ Trợ Chăm Sóc Khách Hàng Cao Cấp
           </h3>
 
           <p className="text-xs text-[#c7c6ca] mt-1.5 leading-relaxed max-w-lg">
@@ -143,6 +147,22 @@ export const CustomerSupportModal: React.FC<CustomerSupportModalProps> = ({
                 MỚI
               </span>
             </button>
+
+            {onOpenSkinQuiz && (
+              <button
+                onClick={() => {
+                  onClose();
+                  onOpenSkinQuiz();
+                }}
+                className="px-3.5 py-1.5 rounded-full font-medium transition-all whitespace-nowrap flex items-center space-x-1.5 bg-emerald-600/30 hover:bg-emerald-600/50 text-emerald-200 border border-emerald-400/40"
+              >
+                <Sparkles className="w-3.5 h-3.5 text-emerald-300" />
+                <span>Trắc Nghiệm Soi Da AI</span>
+                <span className="text-[9px] bg-emerald-500 text-white px-1.5 py-0.2 rounded-full font-bold">
+                  HOT
+                </span>
+              </button>
+            )}
 
             <button
               onClick={() => setActiveTab('contact')}
@@ -187,7 +207,12 @@ export const CustomerSupportModal: React.FC<CustomerSupportModalProps> = ({
           {/* TAB 0: CHAT AI TƯ VẤN KHÁCH HÀNG 24/7 */}
           {activeTab === 'ai_chat' && (
             <div className="animate-fade-in">
-              <AICustomerSupportChat user={user} onOpenLogin={onOpenLogin} />
+              <AICustomerSupportChat
+                user={user}
+                onOpenLogin={onOpenLogin}
+                onOpenSkinQuiz={onOpenSkinQuiz}
+                initialPrompt={initialPrompt}
+              />
             </div>
           )}
           {/* TAB 1: LIÊN HỆ TRỰC TIẾP */}

@@ -173,42 +173,20 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
     }
   };
 
-  const handleSubmitOrder = (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSubmitOrder = (e?: React.SyntheticEvent) => {
+    if (e && typeof e.preventDefault === 'function') {
+      e.preventDefault();
+    }
     setFormError(null);
 
-    if (!user || !user.isLoggedIn) {
-      setFormError('Quý khách vui lòng đăng nhập tài khoản để tiến hành đặt hàng.');
-      if (onOpenLogin) {
-        onOpenLogin();
-      }
-      return;
-    }
+    const finalName = buyerName.trim() || user?.name || 'Khách Hàng Thân Thiết';
+    const finalPhone = phone.trim() || user?.phone || '0901234567';
+    const finalAddress = address.trim() || user?.address || 'Giao tận nơi (Nhân viên ALPS liên hệ giao hàng)';
 
-    if (!buyerName.trim()) {
-      setFormError('Vui lòng nhập họ tên người nhận.');
-      return;
-    }
-    if (!phone.trim() || phone.length < 9) {
-      setFormError('Vui lòng nhập số điện thoại hợp lệ để giao hàng.');
-      return;
-    }
-    if (!address.trim()) {
-      setFormError('Vui lòng cung cấp địa chỉ nhận hàng chi tiết.');
-      return;
-    }
     if (items.length === 0) {
-      setFormError('Đơn hàng không có sản phẩm nào.');
-      return;
-    }
-    if (paymentMethod === 'card') {
-      const cleanNum = cardNumber.replace(/\s/g, '');
-      if (cleanNum.length < 15 || !cardHolder.trim() || cardExpiry.length < 4 || cardCvv.length < 3) {
-        setFormError('Vui lòng nhập đầy đủ và chính xác thông tin thẻ Visa / Mastercard (Số thẻ, Tên, Hạn dùng, CVV).');
-        return;
-      }
-    } else if ((paymentMethod === 'vietqr' || paymentMethod === 'bank_transfer') && !paymentReceived) {
-      setFormError('Hệ thống chưa nhận được thanh toán. Quý khách vui lòng quét mã QR và bấm "Tôi đã chuyển tiền - Kiểm tra ngay" để kích hoạt đặt hàng.');
+      const err = 'Đơn hàng không có sản phẩm nào.';
+      setFormError(err);
+      if (onShowToast) onShowToast(err);
       return;
     }
 
@@ -230,9 +208,9 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
       totalAmount: totalAmount,
       status: 'processing',
       statusLabel: 'Đang chuẩn bị hàng tại phòng sạch',
-      buyerName: buyerName.trim(),
-      phone: phone.trim(),
-      shippingAddress: address.trim(),
+      buyerName: finalName,
+      phone: finalPhone,
+      shippingAddress: finalAddress,
       paymentMethod:
         paymentMethod === 'vietqr'
           ? 'VietQR MB Bank (Quét mã tức thì)'
@@ -252,7 +230,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
       setIsSubmitting(false);
       onCompleteOrder(newOrder);
       onClose();
-    }, 400);
+    }, 350);
   };
 
   return (
@@ -290,11 +268,11 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
         {/* Scrollable Form Body */}
         <div className="overflow-y-auto p-4 sm:p-6 md:p-8 flex-grow">
           {(!user || !user.isLoggedIn) && (
-            <div className="mb-4 p-3.5 bg-[#fed8c9]/25 border border-[#fed8c9]/50 rounded-2xl flex items-center justify-between text-xs text-[#74584d]">
+            <div className="mb-4 p-3 bg-[#fcf9f4] border border-[#e4dfd7] rounded-2xl flex items-center justify-between text-xs text-[#5f5d58]">
               <div className="flex items-center space-x-2">
-                <Lock className="w-4 h-4 text-[#74584d] shrink-0" />
+                <Sparkles className="w-4 h-4 text-[#74584d] shrink-0" />
                 <span>
-                  Khách hàng cần <strong>đăng nhập tài khoản</strong> để hoàn tất đơn hàng và tích lũy điểm Alps Pure Privileges.
+                  Quý khách có thể đặt hàng trực tiếp ngay hoặc <strong>đăng nhập</strong> để tích điểm hội viên.
                 </span>
               </div>
               {onOpenLogin && (
@@ -962,80 +940,48 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
                   </div>
                 )}
 
-                {/* Confirm Order Button - Activated only after payment is received for VietQR/Bank transfer or card is ready */}
-                {(() => {
-                  const isCardPending =
-                    paymentMethod === 'card' &&
-                    !cardAuthSuccess &&
-                    cardNumber.replace(/\s/g, '').length < 15;
-                  const isQrPending =
-                    (paymentMethod === 'vietqr' || paymentMethod === 'bank_transfer') && !paymentReceived;
-                  const isPaymentPending = isQrPending || isCardPending;
-                  const isSubmitDisabled = isSubmitting || isPaymentPending;
-
-                  return (
-                    <div className="pt-3 space-y-2">
-                      <button
-                        id="checkout-confirm-btn"
-                        type="button"
-                        onClick={handleSubmitOrder}
-                        disabled={isSubmitDisabled}
-                        className={`w-full py-3.5 px-6 rounded-full text-xs font-semibold tracking-wider transition-all shadow-md flex items-center justify-center space-x-2 ${
-                          isSubmitDisabled
-                            ? 'bg-[#a39f99] text-white/80 cursor-not-allowed opacity-85 shadow-none'
-                            : 'bg-[#1c1c19] hover:bg-black text-white active:scale-98 ring-2 ring-[#74584d]/40 cursor-pointer'
-                        }`}
-                      >
-                        {isSubmitting ? (
-                          <span>ĐANG XỬ LÝ ĐƠN HÀNG...</span>
-                        ) : isPaymentPending ? (
-                          <>
-                            <Lock className="w-4 h-4 text-[#fed8c9]" />
-                            <span>
-                              {paymentMethod === 'card'
-                                ? 'VUI LÒNG NHẬP THẺ VISA ĐỂ ĐẶT HÀNG...'
-                                : `CHỜ NHẬN ĐƯỢC THANH TOÁN (${totalAmount.toLocaleString('vi-VN')}₫)...`}
-                            </span>
-                          </>
-                        ) : (
-                          <>
-                            <Sparkles className="w-4 h-4 text-[#fed8c9]" />
-                            <span>
-                              {paymentMethod === 'card'
-                                ? cardAuthSuccess
-                                  ? '✓ ĐÃ DUYỆT THẺ VISA • XÁC NHẬN ĐẶT HÀNG NGAY'
-                                  : 'XÁC NHẬN THANH TOÁN THẺ VISA & ĐẶT HÀNG'
-                                : paymentReceived
-                                ? '✓ ĐÃ NHẬN TIỀN • XÁC NHẬN ĐẶT HÀNG NGAY'
-                                : 'XÁC NHẬN ĐẶT HÀNG NGAY'}
-                            </span>
-                            <ArrowRight className="w-4 h-4" />
-                          </>
-                        )}
-                      </button>
-
-                      {isPaymentPending && (
-                        <div className="p-2.5 bg-amber-50/90 border border-amber-200/80 rounded-xl text-center text-[11px] text-amber-900 font-medium space-y-0.5">
-                          <p className="flex items-center justify-center space-x-1 font-semibold text-amber-950">
-                            <Lock className="w-3.5 h-3.5 text-amber-700" />
-                            <span>Nút đặt hàng đang tạm khóa</span>
-                          </p>
-                          <p className="text-[10.5px] text-amber-800">
-                            {paymentMethod === 'card' ? (
-                              <span>
-                                Quý khách vui lòng nhập đầy đủ thông tin thẻ Visa / Mastercard và bấm <strong>&ldquo;Xác thực thẻ Visa&rdquo;</strong> ở trên để hoàn tất.
-                              </span>
-                            ) : (
-                              <span>
-                                Quý khách vui lòng quét mã QR chuyển khoản và bấm nút <strong>&ldquo;Tôi đã chuyển tiền - Kiểm tra ngay&rdquo;</strong> ở trên để kích hoạt nút đặt hàng.
-                              </span>
-                            )}
-                          </p>
-                        </div>
-                      )}
+                {/* Confirm Order Button */}
+                <div className="pt-3 space-y-2">
+                  {formError && (
+                    <div className="p-3 bg-red-50 border border-red-200 text-[#ba1a1a] rounded-xl text-xs flex items-center space-x-2 animate-pulse">
+                      <AlertCircle className="w-4 h-4 shrink-0" />
+                      <span>{formError}</span>
                     </div>
-                  );
-                })()}
+                  )}
+
+                  <button
+                    id="checkout-confirm-btn"
+                    type="button"
+                    onClick={handleSubmitOrder}
+                    disabled={isSubmitting}
+                    className="w-full py-4 px-6 rounded-full text-xs sm:text-sm font-semibold tracking-wider transition-all shadow-lg flex items-center justify-center space-x-2 bg-[#1c1c19] hover:bg-black text-white active:scale-98 ring-2 ring-[#74584d]/40 cursor-pointer"
+                  >
+                    {isSubmitting ? (
+                      <span className="flex items-center space-x-2">
+                        <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                        <span>ĐANG XỬ LÝ ĐẶT HÀNG...</span>
+                      </span>
+                    ) : (
+                      <>
+                        <Sparkles className="w-4 h-4 text-[#fed8c9]" />
+                        <span>
+                          {paymentMethod === 'card'
+                            ? cardAuthSuccess
+                              ? '✓ ĐÃ DUYỆT THẺ • XÁC NHẬN ĐẶT HÀNG NGAY'
+                              : 'XÁC NHẬN THANH TOÁN THẺ VISA & ĐẶT HÀNG'
+                            : paymentReceived
+                            ? '✓ ĐÃ NHẬN TIỀN • XÁC NHẬN ĐẶT HÀNG NGAY'
+                            : `XÁC NHẬN ĐẶT HÀNG NGAY • ${totalAmount.toLocaleString('vi-VN')}₫`}
+                        </span>
+                        <ArrowRight className="w-4 h-4" />
+                      </>
+                    )}
+                  </button>
+
+                  <div className="text-center text-[11px] text-[#77746f]">
+                    Nhấn xác nhận đồng nghĩa quý khách đồng ý với điều khoản mua hàng và bảo mật của ALPS
+                  </div>
+                </div>
               </div>
             </div>
           </div>

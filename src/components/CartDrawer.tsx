@@ -121,7 +121,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                 </h4>
 
                 <p className="text-xs sm:text-sm text-[#77767b] max-w-xs leading-relaxed mb-6">
-                  Bạn chưa chọn sản phẩm nào. Hãy khám phá bộ sưu tập tế bào gốc thuần chay tuyết Alps Thụy Sĩ để bắt đầu nghi thức nuôi dưỡng làn da.
+                  Bạn chưa chọn sản phẩm nào. Hãy khám phá bộ sưu tập chăm sóc da tuyết Alps để bắt đầu nghi thức nuôi dưỡng làn da.
                 </p>
 
                 <button
@@ -140,7 +140,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                 <div className="mt-10 pt-6 border-t border-[#202022]/6 w-full max-w-xs space-y-3 text-left">
                   <div className="flex items-center space-x-2.5 text-xs text-[#46464a]">
                     <ShieldCheck className="w-4 h-4 text-[#74584d] shrink-0" />
-                    <span>100% Chính hãng Thụy Sĩ • Thuần chay hữu cơ</span>
+                    <span>100% Chính hãng Alps • Công thức hữu cơ lành tính</span>
                   </div>
                   <div className="flex items-center space-x-2.5 text-xs text-[#46464a]">
                     <Truck className="w-4 h-4 text-[#74584d] shrink-0" />

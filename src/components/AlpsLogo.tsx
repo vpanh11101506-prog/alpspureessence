@@ -8,240 +8,165 @@ interface AlpsIconProps {
 }
 
 /**
- * Biểu tượng nguyên bản đỉnh Alps (Alpine Mountain & Pure Essence Emblem):
- * - Đỉnh Matterhorn / Alps hùng vĩ ở trung tâm với sườn tuyết băng hà phân chia sống núi (summit ridge)
- * - Các dãy núi vệ tinh phía sau sắc nét ánh vàng kim cát Thụy Sĩ (#c4a572)
- * - Rừng thông bách xanh đại ngàn (#2d4a36) hai bên sườn núi
- * - Mầm sống thảo mộc thực vật thuần chay (botanical seedling) đâm chồi ở chân núi
- * - Mặt hồ băng tuyết êm đềm với hai gợn sóng phản chiếu (#c4a572)
+ * Biểu tượng dãy núi Alps thương hiệu (Độ dày nét đậm rõ nét y hệt ảnh mẫu):
+ * - Đỉnh núi tuyết băng hà trung tâm với nét đậm, rãnh nứt đá tuyết rõ ràng
+ * - 2 ngọn núi màu trắng viền xanh lá đậm nét hai bên (liền khối, không cắt ở trong)
+ * - 2 ngọn núi vàng cát Thụy Sĩ (#c89f65) nét dày dặn ở phía sau
+ * - Các cây thông nhỏ đậm chất, ôm sát chân núi
+ * - Mầm sống thảo mộc nở rộ và các đường gợn sóng hồ băng dày dặn
  */
 export const AlpsIcon: React.FC<AlpsIconProps> = ({
-  className = 'w-10 h-7',
-  size,
+  className = 'w-12 h-8',
+  color,
+  iconColor,
 }) => {
+  const customColor = iconColor || color;
+  const isLight = customColor === '#fed8c9' || customColor === 'white';
+  const goldColor = isLight ? '#fed8c9' : '#c89f65';
+  const darkStroke = isLight ? '#ffffff' : (customColor || '#1c1c19');
+  const glacierLeft = isLight ? 'rgba(255,255,255,0.25)' : '#d2dce2';
+  const glacierRight = isLight ? 'rgba(255,255,255,0.45)' : '#f5f9fa';
+
+  // Hai ngọn núi màu trắng viền xanh lá hai bên (nét dày, liền khối không cắt ở trong)
+  const whiteMountainFill = isLight ? 'rgba(255,255,255,0.25)' : '#ffffff';
+  const greenStroke = isLight ? '#62c48d' : '#173823';
+  const treeFill = isLight ? '#fed8c9' : '#173823';
+  const treeStroke = isLight ? 'none' : '#102819';
+
   return (
     <svg
-      viewBox="0 0 160 80"
+      viewBox="0 0 160 84"
+      width="100%"
+      height="100%"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      className={className}
-      style={size ? { width: size, height: size * 0.5 } : undefined}
+      className={`object-contain inline-block select-none ${className}`}
     >
-      {/* 1. DÃY NÚI ÁNH KIM PHÍA SAU (GOLDEN ALPINE RIDGES) */}
-      {/* Sườn núi vàng xa bên trái */}
-      <path
-        d="M20 62 L32 44 L44 62"
-        stroke="#c4a572"
-        strokeWidth="1.4"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      {/* Đỉnh núi vàng trung bên trái */}
-      <path
-        d="M30 62 L50 28 L70 62"
-        stroke="#c4a572"
-        strokeWidth="1.6"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M50 28 L40 62"
-        stroke="#c4a572"
-        strokeWidth="1.2"
-        strokeLinecap="round"
-      />
+      {/* 1. HAI NGỌN NÚI VÀNG CÁT PHÍA SAU (NÉT DÀY RÕ DÁNG) */}
+      <path d="M20 63 L42 24 L64 63" stroke={goldColor} strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M42 24 L31 63" stroke={goldColor} strokeWidth="1.8" strokeLinecap="round" />
 
-      {/* Đỉnh núi vàng trung bên phải */}
-      <path
-        d="M90 62 L110 28 L130 62"
-        stroke="#c4a572"
-        strokeWidth="1.6"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M110 28 L120 62"
-        stroke="#c4a572"
-        strokeWidth="1.2"
-        strokeLinecap="round"
-      />
-      {/* Sườn núi vàng xa bên phải */}
-      <path
-        d="M116 62 L128 44 L140 62"
-        stroke="#c4a572"
-        strokeWidth="1.4"
-        strokeLinecap="round"
+      <path d="M96 63 L118 24 L140 63" stroke={goldColor} strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M118 24 L129 63" stroke={goldColor} strokeWidth="1.8" strokeLinecap="round" />
+
+      {/* 2. HAI NGỌN NÚI TRẮNG VIỀN XANH LÁ HAI BÊN (NÉT VIỀN DÀY, LIỀN KHỐI KHÔNG CẮT TRONG) */}
+      {/* Núi trắng viền xanh bên trái */}
+      <polygon
+        points="32,63 54,23 76,63"
+        fill={whiteMountainFill}
+        stroke={greenStroke}
+        strokeWidth="2.6"
         strokeLinejoin="round"
       />
 
-      {/* 2. ĐỈNH NÚI CHÍNH BĂNG HÀ (CENTRAL MAJESTIC PEAK) */}
-      {/* Sườn núi bên trái - Màu lam xám băng hà (Glacial Slate) */}
-      <path
-        d="M80 12 L52 62 L80 62 Z"
-        fill="#cad5dc"
-        stroke="#23211f"
-        strokeWidth="1.8"
-        strokeLinejoin="round"
-      />
-      {/* Sườn núi bên phải - Màu tuyết trắng băng tuyết (Crisp Alpine Snow) */}
-      <path
-        d="M80 12 L80 62 L108 62 Z"
-        fill="#f0f5f7"
-        stroke="#23211f"
-        strokeWidth="1.8"
+      {/* Núi trắng viền xanh bên phải */}
+      <polygon
+        points="84,63 106,23 128,63"
+        fill={whiteMountainFill}
+        stroke={greenStroke}
+        strokeWidth="2.6"
         strokeLinejoin="round"
       />
 
-      {/* Sống núi nhọn trung tâm (Summit Ridge) */}
-      <path
-        d="M80 12 L80 62"
-        stroke="#23211f"
-        strokeWidth="2.2"
-        strokeLinecap="round"
-      />
+      {/* 3. ĐỈNH NÚI BĂNG HÀ TRUNG TÂM (NÉT DÀY, UY NGHIÊM) */}
+      <path d="M80 10 L50 63 L80 63 Z" fill={glacierLeft} stroke={darkStroke} strokeWidth="2.8" strokeLinejoin="round" />
+      <path d="M80 10 L80 63 L110 63 Z" fill={glacierRight} stroke={darkStroke} strokeWidth="2.8" strokeLinejoin="round" />
+      <path d="M80 10 L80 63" stroke={darkStroke} strokeWidth="3.0" strokeLinecap="round" />
 
-      {/* Các vết nứt tuyết và đường vân khối trên sườn núi */}
-      <path
-        d="M68 44 L80 36"
-        stroke="#23211f"
-        strokeWidth="1.1"
-        strokeLinecap="round"
-        opacity="0.65"
-      />
-      <path
-        d="M72 54 L80 48"
-        stroke="#23211f"
-        strokeWidth="1.1"
-        strokeLinecap="round"
-        opacity="0.65"
-      />
-      <path
-        d="M92 42 L80 34"
-        stroke="#23211f"
-        strokeWidth="1.1"
-        strokeLinecap="round"
-        opacity="0.65"
-      />
-      <path
-        d="M96 52 L80 46"
-        stroke="#23211f"
-        strokeWidth="1.1"
-        strokeLinecap="round"
-        opacity="0.65"
-      />
+      {/* VÂN NÚI VÀ ĐƯỜNG NỨT BĂNG ĐỈNH GIỮA (NÉT ĐẬM VÀ RÕ) */}
+      <path d="M67 43 L80 34" stroke={darkStroke} strokeWidth="1.8" strokeLinecap="round" />
+      <path d="M71 53 L80 47" stroke={darkStroke} strokeWidth="1.8" strokeLinecap="round" />
+      <path d="M93 41 L80 32" stroke={darkStroke} strokeWidth="1.8" strokeLinecap="round" />
+      <path d="M97 51 L80 45" stroke={darkStroke} strokeWidth="1.8" strokeLinecap="round" />
 
-      {/* 3. RỪNG THÔNG BÁCH XANH SƯỜN NÚI (EVERGREEN ALPINE PINES) */}
-      {/* Cụm thông bên trái */}
-      <g fill="#2d4a36" stroke="#1d3325" strokeWidth="0.5">
-        {/* Cây thông 1 */}
-        <path d="M26 50 L29 55 L23 55 Z" />
-        <path d="M26 53 L30 59 L22 59 Z" />
-        <path d="M26 57 L31 63 L21 63 Z" />
-        {/* Cây thông 2 */}
-        <path d="M34 46 L37 51 L31 51 Z" />
-        <path d="M34 49 L38 56 L30 56 Z" />
-        <path d="M34 54 L39 63 L29 63 Z" />
-        {/* Cây thông 3 */}
-        <path d="M42 51 L45 56 L39 56 Z" />
-        <path d="M42 54 L46 62 L38 62 Z" />
+      {/* 4. RỪNG THÔNG BÁCH ĐẬM NÉT (DÀY, NỞ RỘ ÔM SÁT CHÂN NÚI) */}
+      <g fill={treeFill} stroke={treeStroke} strokeWidth="0.6">
+        {/* Nhóm cây bên trái */}
+        <path d="M33 50 L37 55 L29 55 Z" />
+        <path d="M33 53 L38 59 L28 59 Z" />
+        <path d="M33 57 L40 64 L26 64 Z" />
+
+        <path d="M41 46 L45 52 L37 52 Z" />
+        <path d="M41 50 L46 57 L36 57 Z" />
+        <path d="M41 55 L48 64 L34 64 Z" />
+
+        <path d="M49 49 L53 55 L45 55 Z" />
+        <path d="M49 53 L54 60 L44 60 Z" />
+        <path d="M49 57 L55 64 L43 64 Z" />
+
+        {/* Nhóm cây bên phải */}
+        <path d="M111 49 L115 55 L107 55 Z" />
+        <path d="M111 53 L116 60 L106 60 Z" />
+        <path d="M111 57 L117 64 L105 64 Z" />
+
+        <path d="M119 46 L123 52 L115 52 Z" />
+        <path d="M119 50 L124 57 L114 57 Z" />
+        <path d="M119 55 L126 64 L112 64 Z" />
+
+        <path d="M127 50 L131 55 L123 55 Z" />
+        <path d="M127 53 L132 59 L122 59 Z" />
+        <path d="M127 57 L134 64 L120 64 Z" />
       </g>
 
-      {/* Cụm thông bên phải */}
-      <g fill="#2d4a36" stroke="#1d3325" strokeWidth="0.5">
-        {/* Cây thông 4 */}
-        <path d="M118 51 L121 56 L115 56 Z" />
-        <path d="M118 54 L122 62 L114 62 Z" />
-        {/* Cây thông 5 */}
-        <path d="M126 46 L129 51 L123 51 Z" />
-        <path d="M126 49 L130 56 L122 56 Z" />
-        <path d="M126 54 L131 63 L121 63 Z" />
-        {/* Cây thông 6 */}
-        <path d="M134 50 L137 55 L131 55 Z" />
-        <path d="M134 53 L138 59 L130 59 Z" />
-        <path d="M134 57 L139 63 L129 63 Z" />
-      </g>
+      {/* 5. MẦM SỐNG THẢO MỘC TRUNG TÂM (LỚN VÀ ĐẬM NÉT Y ẢNH MẪU) */}
+      <path d="M80 62 C73 59 71 52 77 49 C82 52 82 58 80 62 Z" fill={isLight ? '#fed8c9' : '#173823'} stroke={isLight ? '#fed8c9' : '#102819'} strokeWidth="1.0" />
+      <path d="M80 62 C87 59 89 52 83 49 C78 52 78 58 80 62 Z" fill={isLight ? '#fed8c9' : '#173823'} stroke={isLight ? '#fed8c9' : '#102819'} strokeWidth="1.0" />
+      <circle cx="80" cy="62" r="1.6" fill={isLight ? '#fed8c9' : '#74584d'} />
 
-      {/* 4. MẦM SỐNG THẢO MỘC THUẦN CHAY Ở CHÂN NÚI (CENTRAL BOTANICAL SPROUT) */}
-      {/* Lá mầm trái */}
-      <path
-        d="M80 62 C75 59 73 54 78 52 C81 54 81 59 80 62 Z"
-        fill="#4d5f49"
-        stroke="#2d402d"
-        strokeWidth="0.9"
-      />
-      {/* Lá mầm phải */}
-      <path
-        d="M80 62 C85 59 87 54 82 52 C79 54 79 59 80 62 Z"
-        fill="#4d5f49"
-        stroke="#2d402d"
-        strokeWidth="0.9"
-      />
-      {/* Nhụy hạt mầm */}
-      <circle cx="80" cy="62" r="1.2" fill="#74584d" />
-
-      {/* 5. ĐƯỜNG CHÂN NÚI VÀ GỢN SÓNG HỒ NƯỚC BĂNG (BASE & LAKE RIPPLES) */}
-      <path
-        d="M20 63.5 L140 63.5"
-        stroke="#c4a572"
-        strokeWidth="1.3"
-        strokeLinecap="round"
-      />
-      {/* Gợn sóng phản chiếu 1 */}
-      <path
-        d="M32 67.5 Q56 69 80 67.5 Q104 66 128 67.5"
-        stroke="#c4a572"
-        strokeWidth="1.1"
-        strokeLinecap="round"
-        opacity="0.85"
-      />
-      {/* Gợn sóng phản chiếu 2 */}
-      <path
-        d="M44 71.5 Q62 73 80 71.5 Q98 70 116 71.5"
-        stroke="#c4a572"
-        strokeWidth="0.9"
-        strokeLinecap="round"
-        opacity="0.75"
-      />
+      {/* 6. GỢN SÓNG HỒ NƯỚC BĂNG & CHÂN TRỜI (NÉT DÀY UỐN LƯỢN NGHỆ THUẬT) */}
+      <path d="M16 63.5 Q48 64.5 80 63.5 Q112 62.5 144 63.5" stroke={darkStroke} strokeWidth="2.2" strokeLinecap="round" />
+      <path d="M28 68.5 Q54 70.5 80 68.5 Q106 66.5 132 68.5" stroke={darkStroke} strokeWidth="1.8" strokeLinecap="round" opacity="0.9" />
+      <path d="M42 73.5 Q61 75 80 73.5 Q99 72 118 73.5" stroke={goldColor} strokeWidth="1.4" strokeLinecap="round" opacity="0.85" />
     </svg>
   );
 };
 
 interface AlpsLogoProps {
-  variant?: 'full' | 'icon' | 'stacked';
+  variant?: 'full' | 'icon' | 'stacked' | 'image';
   className?: string;
   textColor?: string;
   iconColor?: string;
   subtitle?: string;
+  useImage?: boolean;
 }
 
+/**
+ * Logo ALPS (Độ đậm, dày dặn và phong thái sang trọng y hệt ảnh mẫu):
+ * - Icon biểu tượng dãy núi nét dày, uy quyền, tinh tế
+ * - Chữ ALPS font Serif đậm đà, quyền quý (Heavy Bold Serif)
+ * - Dòng phụ đề PURE ESSENCE nét dày dặn, dãn chữ chuẩn quý phái
+ */
 export const AlpsLogo: React.FC<AlpsLogoProps> = ({
   variant = 'full',
   className = '',
   textColor = 'text-[#1c1c19]',
+  iconColor,
   subtitle = 'PURE ESSENCE',
 }) => {
+  const isLight = textColor.includes('text-white') || textColor.includes('text-[#fed8c9]');
+
   if (variant === 'icon') {
-    return <AlpsIcon className={className || 'w-10 h-6'} />;
+    return <AlpsIcon className={className || 'w-12 h-8'} color={iconColor} />;
   }
 
   return (
     <div className={`flex flex-col items-center justify-center select-none text-center ${className}`}>
-      {/* Biểu tượng ngọn núi, rừng thông và mầm sống Alps */}
-      <AlpsIcon className="w-16 h-8 sm:w-20 sm:h-9 transition-transform duration-300 group-hover:scale-105" />
-
-      {/* Tên thương hiệu ALPS - Font serif sắc sảo và khoảng cách chữ rộng quý phái */}
-      <div
-        className={`font-serif text-xl sm:text-2xl font-normal tracking-[0.34em] ${textColor} leading-tight mt-0.5 pl-1.5`}
-        style={{ fontFamily: "'Noto Serif', Didot, 'Playfair Display', serif" }}
+      <AlpsIcon
+        className="w-14 h-8 sm:w-16 sm:h-9 mb-1 transition-transform duration-300 group-hover:scale-105"
+        color={iconColor}
+      />
+      <span
+        className={`font-serif tracking-[0.32em] text-xl sm:text-2xl font-bold uppercase transition-colors ${textColor} leading-tight`}
+        style={{ letterSpacing: '0.34em' }}
       >
         ALPS
-      </div>
-
-      {/* Dòng định vị thương hiệu PURE ESSENCE màu đồng ánh ấm */}
+      </span>
       {subtitle && (
         <span
-          className="text-[8.5px] sm:text-[9.5px] tracking-[0.28em] text-[#74584d] font-semibold uppercase mt-0.5 pl-0.5"
-          style={{ fontFamily: "'Plus Jakarta Sans', system-ui, sans-serif" }}
+          className={`text-[9px] sm:text-[10px] font-bold uppercase mt-0.5 tracking-[0.38em] ${
+            isLight ? 'text-[#fed8c9]/95' : 'text-[#4a4742]'
+          }`}
+          style={{ letterSpacing: '0.38em' }}
         >
           {subtitle}
         </span>

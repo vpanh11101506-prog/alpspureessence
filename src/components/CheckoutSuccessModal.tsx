@@ -1,5 +1,5 @@
 import React from 'react';
-import { CheckCircle2, Sparkles, X, Package, MapPin, Headphones } from 'lucide-react';
+import { CheckCircle2, Sparkles, X, Package, MapPin, Headphones, ArrowRight } from 'lucide-react';
 
 interface CheckoutSuccessModalProps {
   isOpen: boolean;
@@ -28,16 +28,16 @@ export const CheckoutSuccessModal: React.FC<CheckoutSuccessModalProps> = ({
     <div className="fixed inset-0 z-50 overflow-y-auto bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
       <div className="fixed inset-0" onClick={onClose} />
 
-      <div className="relative w-full max-w-md bg-white rounded-[2rem] shadow-2xl p-6 sm:p-8 text-center z-10 border border-[#202022]/10">
+      <div className="relative w-full max-w-md bg-white rounded-[2rem] shadow-2xl p-6 sm:p-8 text-center z-10 border border-[#202022]/10 animate-fadeIn">
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 text-[#77767b] hover:text-[#1c1c19] p-1.5"
+          className="absolute top-4 right-4 text-[#77767b] hover:text-[#1c1c19] p-1.5 rounded-full hover:bg-[#f6f3ee] transition-colors"
         >
           <X className="w-5 h-5" />
         </button>
 
-        <div className="w-16 h-16 rounded-full bg-[#8a9a86]/15 text-[#8a9a86] flex items-center justify-center mx-auto mb-4">
-          <CheckCircle2 className="w-8 h-8 stroke-[1.5]" />
+        <div className="w-16 h-16 rounded-full bg-emerald-50 text-emerald-600 border border-emerald-200/60 flex items-center justify-center mx-auto mb-4 shadow-xs">
+          <CheckCircle2 className="w-8 h-8 stroke-[1.8]" />
         </div>
 
         <span className="text-[10px] uppercase tracking-[0.2em] text-[#74584d] font-semibold block mb-1">
@@ -84,40 +84,40 @@ export const CheckoutSuccessModal: React.FC<CheckoutSuccessModalProps> = ({
           </ul>
         </div>
 
-        <div className="mt-6 space-y-2">
+        {/* Action buttons */}
+        <div className="mt-6 space-y-2.5">
+          {/* Main Confirmation Button */}
+          <button
+            onClick={onClose}
+            className="w-full py-3.5 bg-[#1c1c19] hover:bg-black text-white text-xs sm:text-sm font-semibold tracking-wider uppercase rounded-full shadow-lg transition-all active:scale-98 flex items-center justify-center space-x-2 cursor-pointer"
+          >
+            <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+            <span>XÁC NHẬN HOÀN TẤT & ĐÓNG</span>
+          </button>
+
+          {/* Secondary: View Order Details */}
           {onViewOrders && (
             <button
               onClick={() => {
                 onClose();
                 onViewOrders();
               }}
-              className="w-full py-3 bg-[#202022] hover:bg-black text-white text-xs font-semibold tracking-wider rounded-full shadow-md transition-all active:scale-98 flex items-center justify-center space-x-2"
+              className="w-full py-3 bg-[#f6f3ee] hover:bg-[#ece8e2] text-[#1c1c19] text-xs font-semibold tracking-wider uppercase rounded-full border border-[#ebe8e3] transition-all active:scale-98 flex items-center justify-center space-x-2 cursor-pointer"
             >
-              <Package className="w-4 h-4" />
-              <span>XEM DANH MỤC ĐÃ MUA</span>
+              <Package className="w-4 h-4 text-[#74584d]" />
+              <span>XEM CHI TIẾT ĐƠN HÀNG VỪA ĐẶT (#{orderNumber})</span>
             </button>
           )}
 
-          <button
-            onClick={onClose}
-            className={`w-full py-2.5 text-xs font-semibold tracking-wider rounded-full transition-all active:scale-98 ${
-              onViewOrders
-                ? 'bg-[#f6f3ee] hover:bg-[#f0ede9] text-[#1c1c19]'
-                : 'bg-[#202022] hover:bg-black text-white shadow-md'
-            }`}
-          >
-            TIẾP TỤC MUA SẮM
-          </button>
-
           {onOpenSupport && (
-            <div className="pt-2 text-center">
+            <div className="pt-1.5 text-center">
               <button
                 type="button"
                 onClick={() => {
                   onClose();
                   onOpenSupport();
                 }}
-                className="inline-flex items-center space-x-1.5 text-xs text-[#74584d] hover:text-[#1c1c19] font-medium transition-colors"
+                className="inline-flex items-center space-x-1.5 text-xs text-[#74584d] hover:text-[#1c1c19] font-medium transition-colors cursor-pointer"
               >
                 <Headphones className="w-3.5 h-3.5 text-[#74584d]" />
                 <span>Cần đổi địa chỉ gấp hoặc hỗ trợ đơn hàng? Liên hệ CSKH 24/7</span>

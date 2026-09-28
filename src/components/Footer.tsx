@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowRight, ShieldCheck, Award, HeartHandshake, Phone, Headphones, Mail, MapPin } from 'lucide-react';
+import { ArrowRight, ShieldCheck, Award, HeartHandshake, Phone, Headphones, Mail, MapPin, Type } from 'lucide-react';
 import { AlpsLogo } from './AlpsLogo';
 import { PaymentBadgesGroup, VisaBadge, VisaDebitBadge, MastercardBadge, NapasBadge, VietQRBadge } from './PaymentBadges';
 
@@ -7,9 +7,10 @@ interface FooterProps {
   isMobileFrame?: boolean;
   onOpenSupport?: () => void;
   onOpenPolicies?: (tab: 'returns' | 'privacy' | 'shipping') => void;
+  onOpenFontSwitcher?: () => void;
 }
 
-export const Footer: React.FC<FooterProps> = ({ isMobileFrame = false, onOpenSupport, onOpenPolicies }) => {
+export const Footer: React.FC<FooterProps> = ({ isMobileFrame = false, onOpenSupport, onOpenPolicies, onOpenFontSwitcher }) => {
   return (
     <footer className={`bg-[#202022] text-[#fcf9f4] border-t border-[#31302d] ${isMobileFrame ? 'pb-24 pt-8 px-4' : 'pt-12 sm:pt-16 pb-12 sm:pb-16 px-4 sm:px-6'}`}>
       <div className={`${isMobileFrame ? 'w-full' : 'max-w-7xl mx-auto'}`}>
@@ -98,6 +99,16 @@ export const Footer: React.FC<FooterProps> = ({ isMobileFrame = false, onOpenSup
                 <span>Chính sách giao nhận & đồng kiểm</span>
                 <span className="text-[10px] text-[#fed8c9]">↗</span>
               </li>
+              {onOpenFontSwitcher && (
+                <li
+                  onClick={onOpenFontSwitcher}
+                  className="hover:text-white cursor-pointer transition-colors flex items-center space-x-1.5 text-[#fed8c9]"
+                  title="Thay đổi font chữ website"
+                >
+                  <Type className="w-3.5 h-3.5 text-[#fed8c9]" />
+                  <span className="underline decoration-dotted">Tùy chọn phong cách font chữ</span>
+                </li>
+              )}
             </ul>
 
             {onOpenSupport && (
